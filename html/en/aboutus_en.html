@@ -8,6 +8,8 @@
   <title>Restaurants</title>
   <link href="../../css/main.css" rel="stylesheet" >
   <link href="../../css/aboutus.css" rel="stylesheet" >
+  <script src="../../js/default.js" defer></script>
+
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
@@ -18,40 +20,39 @@
       <nav class="icons">
         <ul>
           <li>
-            <a href="../../html/index.html" class="nav_text">
+            <a href="../../html/en/index_en.html" class="nav_text">
               <button class="home_btn">Home</button>
             </a>
           </li>
 
           <li>
-            <a href="../../html/aboutus.html" class="nav_text">
-              <button class="home_btn">About Us</button>
+            <a href="../../html/en/aboutus_en.html" class="nav_text">
+              <button class="home_btn">About us</button>
             </a>
           </li>
           <li>
 
-          <a href="../../html/suosikki.html" class="nav_text">
-            <button class="home_btn">Suosikit</button>
+          <a href="../../html/en/suosikki_en.html" class="nav_text">
+            <button class="home_btn">Favorites</button>
           </a>
         </li>
 
         <li>
-          <a href="../../html/login.html" class="nav_text">
+          <a href="../../html/en/login_en.html" class="nav_text">
             <button class="home_btn">Log in</button>
           </a>
         </li>
-          <li class="kieli">
-            <label for="choicebox">Language:</label>
-            <select name="choicebox" id="choicebox_kieli">
-              <option value="FI">Suomi</option>
-              <option value="EN">Englanti</option>
-            </select>
-          </li>
+        <li class="kieli">
+          <label for="kieli">Language: </label>
+          <select id="kieli" onchange="changeLanguage(this.value)">
+            <option value="FI">Finnish</option>
+            <option value="EN" selected>English</option>
+          </select>
+        </li>
         </ul>
     </div>
     <hr>
   </header>
-
 
     <div class="box">
       <h1>About Us</h1>
