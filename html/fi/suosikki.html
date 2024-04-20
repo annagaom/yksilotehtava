@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,9 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ravintolat</title>
-  <link href="../../css/main.css" rel="stylesheet" >
-  <link href="../../css/suosikki.css" rel="stylesheet" >
+  <link href="../../css/main.css" rel="stylesheet">
+  <link href="../../css/suosikki.css" rel="stylesheet">
   <script src="../../js/default.js" defer></script>
+  <script src="../../js/main.js" defer></script>
   <script src="../../js/suosikki.js" defer></script>
 
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -33,23 +33,23 @@
           </li>
           <li>
 
-          <a href="../../html/fi/uosikki.html" class="nav_text">
-            <button class="home_btn">Suosikit</button>
-          </a>
-        </li>
+            <a href="../../html/fi/suosikki.html" class="nav_text">
+              <button class="home_btn">Suosikit</button>
+            </a>
+          </li>
 
-        <li>
-          <a href="../../html/fi/login.html" class="nav_text">
-            <button class="home_btn">Kirjaudu sisään</button>
-          </a>
-        </li>
-        <li class="kieli">
-          <label for="kieli">Kieli: </label>
-          <select id="kieli" onchange="changeLanguage(this.value)">
-            <option value="FI" selected>Suomi</option>
-            <option value="EN">Englanti</option>
-          </select>
-        </li>
+          <li>
+            <a href="../../html/fi/login.html" class="nav_text">
+              <button class="home_btn">Kirjaudu sisään</button>
+            </a>
+          </li>
+          <li class="kieli">
+            <label for="kieli">Kieli: </label>
+            <select id="kieli" onchange="changeLanguage(this.value)">
+              <option value="FI" selected>Suomi</option>
+              <option value="EN">Englanti</option>
+            </select>
+          </li>
         </ul>
     </div>
     <hr>
@@ -58,18 +58,18 @@
   <div class="table-container">
     <h1>Suosikit ravintolat</h1>
 
-      <label for="search">Etsi:</label>
-      <input type="text" id="search" placeholder="Etsi ravintolaa">
-      <div class="select-container"></div>
-      <label for="choicebox"> Järjestys:</label>
+    <label for="search">Etsi:</label>
+    <input type="text" id="search" placeholder="Etsi ravintolaa">
+    <div class="select-container"></div>
+    <label for="choicebox"> Järjestys:</label>
 
-      <!-- Wrap the select element in a div -->
+    <!-- Wrap the select element in a div -->
 
-      <select id="choicebox">
-        <option value="name">Nimi</option>
-        <option value="name">Kaupunki</option>
-        <option value="distance">Etäisyys</option>
-      </select>
+    <select id="choicebox">
+      <option value="name">Nimi</option>
+      <option value="name">Kaupunki</option>
+      <option value="distance">Etäisyys</option>
+    </select>
 
     <p></p>
 
@@ -82,10 +82,11 @@
       <!-- add restaurants here -->
     </table>
   </div>
-    <!-- modal -->
-    <dialog>
-      <!-- add restaurant info here when restaurant is clicked -->
-    </dialog>
-    </div>
+  <!-- modal -->
+  <dialog>
+    <!-- add restaurant info here when restaurant is clicked -->
+  </dialog>
+  </div>
 </body>
+
 </html>

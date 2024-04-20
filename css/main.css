@@ -45,26 +45,6 @@ margin-right: 20px;
   display: inline-block;
 }
 
-
-/* .suosikki {
-  background-image: url("../image/heart.png");
-  display: inline-block;
-  width: 30px;
-  height: 24px;
-  margin: 3px;
-  background-size: cover;
-}
-
-.login{
-
-  background-image: url('../image/login.png');
-  display: inline-block;
-  padding-right: 20px;
-  width: 30px;
-  height: 29px;
-  margin: 3px;
-  background-size: cover;
-} */
 .kieli {
   margin: 7px -10px 0px 0px;
 }
@@ -80,35 +60,23 @@ hr {
   background-image: linear-gradient(to right, #50a1b1, #72a6a1, #ccc);
 }
 
-.button {
-  background-color: rgb(177, 181, 148);
-  border: 0.2rem;
-  border-radius: 1rem;
-  padding: 1rem 1rem 1rem 1rem;
-  font-size: medium;
-  height: auto;
-  width: auto;
-  float: right;
-  border-radius: 0.5rem;
-}
-
 button {
-  background-color: rgb(206, 209, 185);
-  border: 0.2rem;
+  background-color: #45a891;
+  border: 1px solid #ccc;
   border-radius: 1rem;
-  padding: 1rem 1rem 1rem 1rem;
-  font-size: medium;
-  float: right;
+  color: #f4f7f7;
+  display: inline-block;
+  font-size: 1em;
+  padding: 0.5em 1em;
+  text-decoration: none;
 }
-
 .home_btn {
-  background-color: #f0f0f0;
+  background-color: #f5f4f2;
   border: 1px solid #ccc;
   border-radius: 5px;
   color: #549680;
   display: inline-block;
   font-size: 1em;
-
   padding: 0.5em 1em;
   text-decoration: none;
 }

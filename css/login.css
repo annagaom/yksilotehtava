@@ -31,7 +31,7 @@ input, nutton, select {
 }
 
 #name {
-  border: 1px solid #123456;
+  border: 1px solid #cfd1d3;
 }
 
 /* Varmista, että taulukon leveys pysyy pienempänä kuin sivun leveys */
@@ -93,13 +93,4 @@ input, nutton, select {
 /* Large screens */
 @media (min-width: 1025px) {
   /* Add styles here */
-}
-
-button {
-  background-color: rgb(206, 209, 185);
-  border: 0.2rem;
-  border-radius: 1rem;
-  padding: 1rem 1rem 1rem 1rem;
-  font-size: medium;
-  float: right;
 }

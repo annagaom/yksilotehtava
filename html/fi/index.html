@@ -10,8 +10,10 @@
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" defer></script>
-  <script src="../../js/main.js" defer></script>
+
+  <!-- <script src="../../js/main.js" defer></script> -->
   <script src="../../js/default.js" defer></script>
+  <script src="../../js/main.js" defer></script>
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
@@ -34,23 +36,23 @@
           </li>
           <li>
 
-          <a href="../../html/fi/uosikki.html" class="nav_text">
-            <button class="home_btn">Suosikit</button>
-          </a>
-        </li>
+            <a href="../../html/fi/suosikki.html" class="nav_text">
+              <button class="home_btn">Suosikit</button>
+            </a>
+          </li>
 
-        <li>
-          <a href="../../html/fi/login.html" class="nav_text">
-            <button class="home_btn">Kirjaudu sisään</button>
-          </a>
-        </li>
-        <li class="kieli">
-          <label for="kieli">Kieli: </label>
-          <select id="kieli" onchange="changeLanguage(this.value)">
-            <option value="FI" selected>Suomi</option>
-            <option value="EN">Englanti</option>
-          </select>
-        </li>
+          <li>
+            <a href="../../html/fi/login.html" class="nav_text">
+              <button class="home_btn">Kirjaudu sisään</button>
+            </a>
+          </li>
+          <li class="kieli">
+            <label for="kieli">Kieli: </label>
+            <select id="kieli" onchange="changeLanguage(this.value)">
+              <option value="FI" selected>Suomi</option>
+              <option value="EN">Englanti</option>
+            </select>
+          </li>
         </ul>
     </div>
     <hr>
@@ -66,7 +68,9 @@
       <h1>Ravintolat</h1>
 
       <label for="search">Etsi</label>
-      <input type="text" id="search" placeholder="Etsi ravintola ...">
+      <input type="text" id="searchInput" placeholder="Etsi ravintola ..." oninput="searchRestaurants()">
+      <ul id = "searchResults"></ul>
+
       <div class="select-container"></div>
       <label for="choicebox"> Järjestys:</label>
 
@@ -78,17 +82,17 @@
         <option value="distance">Etäisyys</option>
       </select>
 
-    <p></p>
+      <p></p>
 
-    <table>
-      <tr>
-        <th>Nimi</th>
-        <th>Osoite</th>
-        <th>Etäisyys</th>
-      </tr>
-      <!-- add restaurants here -->
-    </table>
-  </div>
+      <table>
+        <tr>
+          <th>Nimi</th>
+          <th>Osoite</th>
+          <th>Etäisyys</th>
+        </tr>
+        <!-- add restaurants here -->
+      </table>
+    </div>
     <!-- modal -->
     <dialog>
       <!-- add restaurant info here when restaurant is clicked -->
