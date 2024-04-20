@@ -8,16 +8,13 @@ POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "etunimi": "Anna",
-    "sukunimi": "Ansku",
-    "tunnus": "anna",
-    "salasana": "12345",
-    "rooli": "admin",
+    "firstname": "Anna",
+    "lastname": "Ansku",
+    "username": "anna",
+    "password": "12345",
     "email": "anna@ascafe.fi",
-    "puhelin": "1234567",
-    "syntymapaiva": "2009-04-09",
-    "ehdot_hyvaksytty": "true",
-    "allennus_ryhma": "Opiskelia"
+    "cookies_accept": "true"
+
 
 }
 
