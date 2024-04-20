@@ -6,6 +6,10 @@ body {
   width: 90%;
   margin: auto;
 }
+header div {
+
+ width: 90%;
+}
 
 a {
   text-decoration: none;
@@ -33,22 +37,16 @@ margin-right: 20px;
 
 }
 
+
+
 .icons {
   text-align: right;
   width: 100%;
   display: inline-block;
 }
 
-.text {
-  background-image: url("../image/text.png");
-  display: inline-block;
-  width: 100px;
-  height: 24px;
-  margin: 3px;
-  background-size: cover;
-}
 
-.suosikki {
+/* .suosikki {
   background-image: url("../image/heart.png");
   display: inline-block;
   width: 30px;
@@ -66,10 +64,20 @@ margin-right: 20px;
   height: 29px;
   margin: 3px;
   background-size: cover;
+} */
+.kieli {
+  margin: 7px -10px 0px 0px;
 }
 
 h1{
   margin-top: 0;
+  color: #312f2f;
+}
+
+hr {
+  border: 0;
+  height: 5px;
+  background-image: linear-gradient(to right, #50a1b1, #72a6a1, #ccc);
 }
 
 .button {
@@ -84,8 +92,25 @@ h1{
   border-radius: 0.5rem;
 }
 
+button {
+  background-color: rgb(206, 209, 185);
+  border: 0.2rem;
+  border-radius: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: medium;
+  float: right;
+}
 
+.home_btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #549680;
+  display: inline-block;
+  font-size: 1em;
 
-
+  padding: 0.5em 1em;
+  text-decoration: none;
+}
 
 

@@ -1,4 +1,5 @@
 
+
 #map {
   width: 45%;
   height: 100vh;
@@ -10,6 +11,11 @@ tr {
   text-align: left;
 }
 
+.select-container {
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 .table-container {
   width: 50%;
@@ -20,8 +26,8 @@ tr {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  margin: 0;
-  padding: 0;
+
+  padding-left: 5%;
 }
 
 th {
@@ -55,15 +61,36 @@ dialog {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
 
   .table-container  {
+    margin-top: 15px;
+    margin-bottom: 20px;
     width: 100%;
-    padding-left: 30px;
+    padding-left: 5px;
   }
   #map {
     width: 100%;
     height: 50vh;
   }
+  .kieli {
+    display: block; /* Change to block display on smaller screens */
+    width: 100%;
+    margin-top: 10px;
+  }
 
+  button {
+    font-size: small;
+  }
 }
+
+
+
+
+
+
+/* Media query for screens with a maximum width of 450px */
+@media screen and (max-width: 500px) {
+  .select-container {
+    display: block; /* Change to block display on smaller screens */
+  }

@@ -6,8 +6,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurants</title>
-  <link href="../css/main.css" rel="stylesheet" >
-  <link href="../css/login.css" rel="stylesheet" >
+  <link href="../../css/main.css" rel="stylesheet" >
+  <link href="....//css/login.css" rel="stylesheet" >
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" defer></script>
@@ -16,68 +16,57 @@
 </head>
 
 <body>
-  <header>
+  <<header>
     <div>
+      <p></p><br>
       <nav class="icons">
         <ul>
           <li>
-            <a href="index.html">
-            <span class="text"></span>
+            <a href="../../html/index.html" class="nav_text">
+              <button class="home_btn">Home</button>
+            </a>
+          </li>
+
+          <li>
+            <a href="../../html/aboutus.html" class="nav_text">
+              <button class="home_btn">About Us</button>
             </a>
           </li>
           <li>
-            <a href="suosikki.html">
-              <span class="suosikki"></span>
-            </a>
-          </li>
-          <li>
-            <a href="login.html">
-              <span class="login"></span>
-            </a>
+
+          <a href="../../html/suosikki.html" class="nav_text">
+            <button class="home_btn">Suosikit</button>
+          </a>
+        </li>
+
+        <li>
+          <a href="../../html/login.html" class="nav_text">
+            <button class="home_btn">Log in</button>
+          </a>
+        </li>
+          <li class="kieli">
+            <label for="choicebox">Language:</label>
+            <select name="choicebox" id="choicebox_kieli">
+              <option value="FI">Suomi</option>
+              <option value="EN">Englanti</option>
+            </select>
           </li>
         </ul>
-      </nav>
     </div>
     <hr>
   </header>
 
-  <div class="aside" id="login-id"><br>
-
-    <form action="https://10.120.x.y/test/form-submission/" method="get">
-      <label for="kayttaja_tunnus">Käyttäjätunnus*</label>
-      <input
-        type="text" name="kayttaja_tunnus"
-        id="kayttaja_tunnus"
-        placeholder="Syötä käyttäjätunnus"
-        required autofocus
-      />
-
-      <label for="salasana">Salasana*</label>
-      <input
-        type="text" name="salasana"
-        id="salasana"
-        placeholder="Syötä salasana"
-        required autofocus
-
-      />
-      <p></p>
-      <a href="oma.html">
-          <button type="submit" >Kirjautu sisään</button>
-      </a>
-    </form>
-    <p></p>
-    <hr>
-    <br>
-    <p>Jos sinulla ei ole vielä käyttäjää, voit rekisteröityä oikella lomakella.</p>
-
-  </div>
   <div id="register-id">
-    <form action="https://10.120.x.y/test/form-submission/" method="post" class="form-container">
+  <br>
+
+    <form action="https://10.120.x.y/test/form-submission/" method="get" class="form-container">
+      <p></p>
+      <h3>Tiedostot</h3>
+
       <label for="firstname">Etunimi*</label>
       <input
         type="text" name="firstname"
         id="firstname"
-        placeholder="Etunimi"
         required autofocus
       />
 
@@ -85,7 +74,6 @@
       <input
         type="text" name="lastname"
         id="lastname"
-        placeholder="Sukunimi"
         required autofocus
       />
 
@@ -94,7 +82,6 @@
         type="text"
         name="name"
         id="name"
-        placeholder="Käyttäjätunnus"
         required autofocus
       />
 
@@ -103,7 +90,6 @@
         name="password"
         type="password"
         id="password"
-        placeholder="salasana"
         required autofocus
       />
 
@@ -112,7 +98,6 @@
         type="email"
         id="email"
         name="email"
-        placeholder="Sähköposti"
         required autofocus
       />
 
@@ -127,7 +112,7 @@
         <input type="checkbox" id="accept-1" name="accept" value="1">
         <label for="accept-1">Hyväksyt ehdot</label><br>
       </div>
-      <button type="submit" >Rekisteröidy</button>
+      <button type="submit" >Tallenna</button>
       <button type="reset">Tyhjennä lomake</button>
       </div>
     </form>
