@@ -1,0 +1,18 @@
+
+GET http://127.0.0.1:3000/not/found/url
+content-Type: application/json
+
+{
+    "password": "123",
+    "email": "aks@jkaj.fi",
+    "username": "admin123",
+    "role": "admin"
+}
+
+POST http://localhost:3000/api/v1/auth/login
+content-Type: application/json
+
+{
+    "password": "123",
+    "username": "lala",
+}

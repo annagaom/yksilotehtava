@@ -1,0 +1,12 @@
+### Post login
+POST http://localhost:3000/api/v1/auth/login
+content-type: application/json
+
+{
+  "username": "JohnDoe",
+  "password": "password1"
+}
+
+### Get my user info
+GET http://localhost:3000/api/v1/auth/me
+Authorization: Bearer <put-your-token-from-login-response-here>

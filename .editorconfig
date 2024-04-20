@@ -1,4 +1,5 @@
 # sample .editorconfig
+*.env
 
 # Top-most EditorConfig file
 root = true

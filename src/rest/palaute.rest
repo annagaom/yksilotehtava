@@ -1,0 +1,15 @@
+###
+GET http://localhost:3000/api/v1/asiakas
+
+
+### uusi user
+POST http://localhost:3000/api/v1/asiakas
+Content-Type: application/json
+
+{
+    "nimi": "Anna",
+    "email": "ajhs@jdsk.fi",
+    "title": "joku palaute",
+    "teksti": "oli hyvä kakkua!",
+    "pvm": "2021-01-01"
+}
