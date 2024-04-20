@@ -1,0 +1,69 @@
+
+#map {
+  width: 45%;
+  height: 100vh;
+  float: left;
+  padding-right: 1vw;
+}
+
+tr {
+  text-align: left;
+}
+
+
+.table-container {
+  width: 50%;
+  float: right;
+  box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+
+th {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  font-weight: normal;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em 1em;
+}
+
+.highlight {
+  background-color: rgb(206, 211, 186);
+  font-weight: 900;
+}
+
+dialog {
+  background-color: rgb(212, 214, 205);
+  box-shadow: 12px, 0px, 0px, 4px ;
+  min-width: 25vw;
+}
+
+/* Varmista, että taulukon leveys pysyy pienempänä kuin sivun leveys */
+@media (max-width: 992px) {
+  #table-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .table-container  {
+    width: 100%;
+    padding-left: 30px;
+  }
+  #map {
+    width: 100%;
+    height: 50vh;
+  }
+
+}

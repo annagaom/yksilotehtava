@@ -1,0 +1,238 @@
+
+body {
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  padding: 0;
+  width: 90%;
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+  font-size: bold;
+
+}
+
+nav {
+
+  padding: 10px 3px 10px 3px;
+  text-align: center;
+  display: flex;
+}
+
+nav ul {
+margin: 0;
+padding: 0;
+display: flex;
+list-style: none;
+justify-content: right;
+}
+
+nav li {
+margin-right: 20px;
+
+}
+
+.icons {
+  text-align: right;
+  width: 100%;
+  display: inline-block;
+}
+
+.text {
+  background-image: url("../image/text.png");
+  display: inline-block;
+  width: 100px;
+  height: 24px;
+  margin: 3px;
+  background-size: cover;
+}
+
+.suosikki {
+  background-image: url("../image/heart.png");
+  display: inline-block;
+  width: 30px;
+  height: 24px;
+  margin: 3px;
+  background-size: cover;
+}
+
+.login{
+
+  background-image: url('../image/login.png');
+  display: inline-block;
+  padding-right: 20px;
+  width: 30px;
+  height: 29px;
+  margin: 3px;
+  background-size: cover;
+}
+
+
+#map {
+  width: 45%;
+  height: 100vh;
+  float: left;
+  padding-right: 1vw;
+}
+
+.aside {
+  width: 45%;
+  height: 100vh;
+  float: left;
+  padding-right: 1vw;
+}
+
+tr {
+  text-align: left;
+}
+
+
+.table-container {
+  width: 50%;
+  float: right;
+  box-sizing: border-box;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+}
+
+th {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+  font-weight: normal;
+  padding: 0.5em 1em;
+  text-align: left;
+}
+
+td {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em 1em;
+}
+
+.highlight {
+  background-color: rgb(206, 211, 186);
+  font-weight: 900;
+}
+
+dialog {
+  background-color: rgb(212, 214, 205);
+  box-shadow: 12px, 0px, 0px, 4px ;
+  min-width: 25vw;
+}
+
+h1{
+  margin-top: 0;
+}
+
+button {
+  background-color: rgb(177, 181, 148);
+  border: 0.2rem;
+  border-radius: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: medium;
+  height: auto;
+  width: auto;
+  float: right;
+}
+
+/* Varmista, että taulukon leveys pysyy pienempänä kuin sivun leveys */
+@media (max-width: 992px) {
+  #table-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .table-container  {
+    width: 100%;
+    padding-left: 30px;
+  }
+  #map {
+    width: 100%;
+    height: 50vh;
+}
+
+}
+
+
+
+
+
+
+--------------------------
+
+form {
+  margin: 1rem;
+}
+
+input, nutton, select {
+  font-size: irem;
+  padding: 0.25rem;
+}
+
+#name {
+  border: 1px solid #123456;
+}
+
+
+/* .myPasswordField {
+  background: rgb(207 194 177);
+  border: 2px;
+  border-radius: 2px;
+} */
+/* #, id*/
+
+
+/* mobilresoluutio*/
+@media (max-width: 500px){
+  form {
+      display: flex;
+      flex-direction: column;
+  }
+  input {
+      margin-bottom: 0.5rem;
+  }
+  button {
+      margin-top: 0.5rem;
+  }
+  input, button {
+      appearance: 0.5rem;
+  }
+}
+
+@media (min-width: 500.1px){
+  form {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-gap: 2rem;
+  }
+  .checkbox-container {
+      grid-column: 2 / -1;
+  }
+
+  button[type="submit"] {
+      order: 2;
+  }
+
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* Add styles here */
+}
+
+/* Large screens */
+@media (min-width: 1025px) {
+  /* Add styles here */
+}
+
+button[type="submit"] {
+  background-color: #0a00ff;
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+}

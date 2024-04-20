@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants</title>
+  <link href="../css/main.css" rel="stylesheet" >
+  <link href="../css/suosikki.css" rel="stylesheet" >
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" defer></script>
+  <script src="../js/suosikki.js" defer></script>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+  <header>
+    <div>
+      <nav class="icons">
+        <ul>
+          <li>
+            <a href="index.html">
+            <span class="text"></span>
+            </a>
+          </li>
+          <li>
+            <a href="suosikki.html">
+              <span class="suosikki"></span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html">
+              <span class="login"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <hr>
+  </header>
+  <div>
+    <h1>Suosikit ravintolat</h1>
+  <table>
+
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Distance</th>
+      <th class="delete-btn"><i class="delete"></i></th>
+
+    </tr>
+    <!-- add suosikki restaurants here -->
+  </table>
+  <!-- modal -->
+  <dialog>
+    <!-- add restaurant info here when restaurant is clicked -->
+  </dialog>
+</div>
+</body>
+</html>

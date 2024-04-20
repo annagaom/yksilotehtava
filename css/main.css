@@ -1,0 +1,91 @@
+
+body {
+  background-color: #f0f0f0;
+  font-family: sans-serif;
+  padding: 0;
+  width: 90%;
+  margin: auto;
+}
+
+a {
+  text-decoration: none;
+  font-size: bold;
+
+}
+
+nav {
+
+  padding: 10px 3px 10px 3px;
+  text-align: center;
+  display: flex;
+}
+
+nav ul {
+margin: 0;
+padding: 0;
+display: flex;
+list-style: none;
+justify-content: right;
+}
+
+nav li {
+margin-right: 20px;
+
+}
+
+.icons {
+  text-align: right;
+  width: 100%;
+  display: inline-block;
+}
+
+.text {
+  background-image: url("../image/text.png");
+  display: inline-block;
+  width: 100px;
+  height: 24px;
+  margin: 3px;
+  background-size: cover;
+}
+
+.suosikki {
+  background-image: url("../image/heart.png");
+  display: inline-block;
+  width: 30px;
+  height: 24px;
+  margin: 3px;
+  background-size: cover;
+}
+
+.login{
+
+  background-image: url('../image/login.png');
+  display: inline-block;
+  padding-right: 20px;
+  width: 30px;
+  height: 29px;
+  margin: 3px;
+  background-size: cover;
+}
+
+h1{
+  margin-top: 0;
+}
+
+.button {
+  background-color: rgb(177, 181, 148);
+  border: 0.2rem;
+  border-radius: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: medium;
+  height: auto;
+  width: auto;
+  float: right;
+  border-radius: 0.5rem;
+}
+
+
+
+
+
+

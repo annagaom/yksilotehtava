@@ -1,0 +1,104 @@
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  height: 100vh;
+  width: 80%;
+
+}
+
+.aside {
+  width: 40%;
+  height: 100vh;
+  float: left;
+  padding-right: 1vw;
+}
+
+.form-container {
+  border: 2px solid #ccc; /* Reunus */
+  border-radius: 10px; /* Kulman pyöristys */
+  padding: 20px; /* Sisennys */
+  width: 50%; /* Leveys */
+  margin: 20px auto; /* Keskitä vaakasuunnassa */
+}
+
+input, nutton, select {
+  font-size: irem;
+  padding: 0.25rem;
+}
+
+#name {
+  border: 1px solid #123456;
+}
+
+/* Varmista, että taulukon leveys pysyy pienempänä kuin sivun leveys */
+@media (max-width: 992px) {
+  #table-container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .form-container  {
+    width: 100%;
+    padding-left: 30px;
+  }
+  .aside {
+    width: 100%;
+    height: 50vh;
+}
+
+}
+
+/* mobilresoluutio*/
+@media (max-width: 500px){
+  form {
+      display: flex;
+      flex-direction: column;
+  }
+  input {
+      margin-bottom: 0.5rem;
+  }
+  button {
+      margin-top: 0.5rem;
+  }
+  input, button {
+      appearance: 0.5rem;
+  }
+}
+
+@media (min-width: 500.1px){
+  form {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-gap: 2rem;
+  }
+  .checkbox-container {
+      grid-column: 2 / -1;
+  }
+
+  button[type="submit"] {
+      order: 2;
+  }
+
+}
+@media (min-width: 601px) and (max-width: 1024px) {
+  /* Add styles here */
+}
+
+/* Large screens */
+@media (min-width: 1025px) {
+  /* Add styles here */
+}
+
+button {
+  background-color: rgb(206, 209, 185);
+  border: 0.2rem;
+  border-radius: 1rem;
+  padding: 1rem 1rem 1rem 1rem;
+  font-size: medium;
+  float: right;
+}

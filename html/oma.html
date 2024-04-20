@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurants</title>
+  <link href="../css/main.css" rel="stylesheet" >
+  <link href="../css/login.css" rel="stylesheet" >
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" defer></script>
+  <script src="../js/login.js" defer></script>
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+  <header>
+    <div>
+      <nav class="icons">
+        <ul>
+          <li>
+            <a href="index.html">
+            <span class="text"></span>
+            </a>
+          </li>
+          <li>
+            <a href="suosikki.html">
+              <span class="suosikki"></span>
+            </a>
+          </li>
+          <li>
+            <a href="login.html">
+              <span class="login"></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <hr>
+  </header>
+
+  <div id="register-id">
+  <br>
+
+    <form action="https://10.120.x.y/test/form-submission/" method="get" class="form-container">
+      <p></p>
+      <h3>Tiedostot</h3>
+
+      <label for="firstname">Etunimi*</label>
+      <input
+        type="text" name="firstname"
+        id="firstname"
+        required autofocus
+      />
+
+      <label for="lastname">Sukunimi*</label>
+      <input
+        type="text" name="lastname"
+        id="lastname"
+        required autofocus
+      />
+
+      <label for="name">Käyttäjätunnus*</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        required autofocus
+      />
+
+      <label for="password">Salasana*</label>
+      <input class="myPasswordField"
+        name="password"
+        type="password"
+        id="password"
+        required autofocus
+      />
+
+      <label for="email">Sähköposti*</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required autofocus
+      />
+
+      <label for="today">Päivämäärä</label>
+      <input
+        type="date"
+        name="date"
+        id="today"
+      />
+
+      <div class="checkbox-container">
+        <input type="checkbox" id="accept-1" name="accept" value="1">
+        <label for="accept-1">Hyväksyt ehdot</label><br>
+      </div>
+      <button type="submit" >Tallenna</button>
+      <button type="reset">Tyhjennä lomake</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
