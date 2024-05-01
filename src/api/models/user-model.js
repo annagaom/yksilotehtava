@@ -1,14 +1,15 @@
+import e from 'express';
 import promisePool from '../../utils/database.js';
 
-const listAllUsers = async () => {
-    const [rows] = await promisePool.query('SELECT * FROM users');
+const listAllTuote= async () => {
+    const [rows] = await promisePool.query('SELECT * FROM tuote');
     return rows;
 };
 
-const findUserById = async (id) => {
+const findTuoteById = async (tuote_id) => {
     const [rows] = await promisePool.execute(
-        'SELECT * FROM users WHERE user_id = ?',
-        [id]
+        'SELECT * FROM tuote WHERE tuote_id = ?',
+        [tuote_id]
     );
     if (rows.length === 0) {
         return false;
@@ -16,66 +17,69 @@ const findUserById = async (id) => {
     return rows[0];
 };
 
-const addUser = async (user) => {
-  const {
-    photo,
-    firstname,
-    lastname,
-    username,
-    password,
-    email,
-    cookies_accept
-
-  } = user;
-
-  const sql = `INSERT INTO users (photo, firstname, lastname, username, password, email, cookies_accept)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-
-  const data = [
-    photo,
-    firstname,
-    lastname,
-    username,
-    password,
-    email,
-    cookies_accept
-  ];
-
-  const rows =  promisePool.execute(sql, data);
-  // if (rows[0].affectedRows === 0) {
-  //     return false;
-  // }
-  // return { asiakas_id: rows[0].insertId };
-};
-
-const getUserByUsername = async (firstname, lastname) => {
-  const sql = `SELECT *
-               FROM users
-               WHERE firstname = ? AND lastname = ?`;
-  const [rows] = await promisePool.execute(sql, [firstname, lastname]);
+const findTuoteByname = async (tuote_nimi) => {
+  const [rows] = await promisePool.execute(
+      'SELECT * FROM tuote WHERE tuote_nimi = ?',
+      [tuote_nimi]
+  );
   if (rows.length === 0) {
       return false;
   }
   return rows[0];
 };
 
+const findLastTuoteId = async () => {
+  try {
+    const [rows] = await promisePool.execute('SELECT tuote_id FROM tuote ORDER BY tuote_id DESC LIMIT 1');
+    if (rows.length > 0) {
+      const lastTuoteId = rows[0].tuote_id;
+      console.log('Last tuote_id:', lastTuoteId);
+      return lastTuoteId;
+    } else {
+      console.error('No tuote found');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching last tuote_id:', error);
+    throw error;
+  }
+};
 
-const removeUser = async (id) => {
+const addTuote = async (tuote, file) => {
+  const { tuote_nimi, tuote_kuvaus, tuote_hinta, tuote_kustannus, tyyppi_id } = tuote;
+
+  const sql = `INSERT INTO tuote (tuote_nimi, tuote_kuvaus, tuote_hinta, tuote_kustannus,
+              tyyppi_id, tuote_kuva) VALUES (?, ?, ?, ?, ?, ?)`;
+
+  console.log('file', file);
+  const params = [tuote_nimi, tuote_kuvaus, tuote_hinta, tuote_kustannus, tyyppi_id, file.filename || null];
+
+  try {
+    const [rows] = await promisePool.execute(sql, params);
+    if (rows.affectedRows === 0) {
+      return false;
+    }
+    return { tuote_id: rows.insertId };
+  } catch (error) {
+    console.error("Error executing SQL query:", error);
+    return false;
+  }
+};
+
+
+const removeTuoteById = async (tuote_id) => {
   const connection = await promisePool.getConnection();
   try {
       const [rows] = await promisePool.execute(
-          'DELETE FROM users WHERE user_id = ?',
-          [id]
+          'DELETE FROM tuote WHERE tuote_id = ?',
+          [tuote_id]
       );
-
       if (rows.affectedRows === 0) {
           return false;
       }
-
       await connection.commit();
-
       return {
-          message: 'User deleted',
+          message: 'tuote deleted',
       };
   } catch (error) {
       await connection.rollback();
@@ -86,14 +90,15 @@ const removeUser = async (id) => {
   }
 };
 
-const updateUser = async (user, id) => {
-  const sql = promisePool.format(`UPDATE users SET ? WHERE user_id = ?`, [
-      user,
-      id,
+const updateTuote = async (tuote, file, tuote_id) => {
+  const sql = promisePool.format(`UPDATE tuote SET ? WHERE tuote_id = ?`, [
+      tuote,
+      file,
+      tuote_id,
   ]);
   try {
       const rows = await promisePool.execute(sql);
-      console.log('updateUser', rows);
+      console.log('updatetuote', rows);
       if (rows.affectedRows === 0) {
           return false;
       }
@@ -104,11 +109,4 @@ const updateUser = async (user, id) => {
   }
 };
 
-export {
-    listAllUsers,
-    findUserById,
-    addUser,
-    getUserByUsername,
-    removeUser,
-    updateUser,
-};
+export {listAllTuote, findTuoteById, findTuoteByname,findLastTuoteId, addTuote, removeTuoteById, updateTuote};

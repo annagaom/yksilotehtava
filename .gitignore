@@ -203,8 +203,4 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node,macos,visualstudiocode
 
 
-# ignore content of uploads folder
-uploads/*
-# except one (empty) file to have the folder in version control
-!uploads/.gitkeep
 

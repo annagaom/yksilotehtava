@@ -1,65 +1,92 @@
-
 ###
-GET http://localhost:3000/api/v1/users
+GET http://localhost:3000/api/v1/tuote
 
 
-### uusi user
-POST http://localhost:3000/api/v1/users
-Content-Type: application/json
+###get tuote by id
+GET http://localhost:3000/api/v1/tuote/1
+
+### getviimeinen tuote id
+
+GET http://localhost:3000/api/v1/tuote/lastid
+
+### get kategoria by name
+GET http://localhost:3000/api/v1/tuote/name/jääkahvi
+
+
+
+### Upload vito cat image to backend
+POST http://localhost:3000/api/v1/cats
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="cat_name"
+
+Vito
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="owner"
+
+37
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="vito.png"
+Content-Type: image/png
+
+< ./images/vito.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### Upload veikko cat image to backend
+POST http://localhost:3000/api/v1/cats
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="title"
+
+New cat title
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="veikko.png"
+Content-Type: image/png
+
+< ./images/veikko.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+### Upload vito gif cat image to backend
+# should save file as .jpg
+POST http://localhost:3000/api/v1/cats
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="title"
+
+New cat title
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="user_id"
+
+1
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="vito.png"
+Content-Type: image/gif
+
+< ./images/vito.png
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+
+###Delete tuote by id
+DELETE http://localhost:3000/api/v1/tuote/2
+
+
+###Update tuote by id, käydä postman to update
+PUT http://localhost:3000/api/v1/tuote/2
+Content-Type: from-data
 
 {
-    "firstname": "Anna",
-    "lastname": "Ansku",
-    "username": "anna",
-    "password": "12345",
-    "email": "anna@ascafe.fi",
-    "cookies_accept": "true"
-
-
+    "tuote_nimi": "mansikkakakku_pala",
+    "tuote_kuva": "",
+    "tuote_hinta": "3.25",
+    "tuote_kustannus": "2.00",
+    "tyyppi_id": ""
 }
-
-
-
-### post new user
-POST http://localhost:3000/api/v1/asiakas
-Content-Type: multipart/form-data; boundary=---7e33a1b6e0e2
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_id"
-2
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_etunimi"
-Anna
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_sukunimi"
-Ansku
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_tunnus"
-anna
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_salasana"
-12345
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="role"
-admin
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_email"
-anna@ascafe.fi
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_puh"
-12345678
-
------7e33a1b6e0e2
-Content-Disposition: form-data; name="asiakas_registeri_pvm"
-2009-04-09
-
-
-
 
