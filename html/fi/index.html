@@ -67,18 +67,18 @@
     <div class="table-container">
       <h1>Ravintolat</h1>
 
-      <label for="search">Etsi</label>
-      <input type="text" id="searchInput" placeholder="Etsi ravintola ..." oninput="searchRestaurants()">
+      <label for="search">Etsi: </label>
+      <input type="text" id="search" placeholder="Etsi ravintola ..." oninput="searchRestaurants()">
       <ul id = "searchResults"></ul>
 
       <div class="select-container"></div>
-      <label for="choicebox"> Järjestys:</label>
+      <label for="sortBy"> Järjestys:</label>
 
       <!-- Wrap the select element in a div -->
 
-      <select id="choicebox">
+      <select id="sortBy">
+        <option value="none">Select</option>
         <option value="name">Nimi</option>
-        <option value="name">Kaupunki</option>
         <option value="distance">Etäisyys</option>
       </select>
 
@@ -88,6 +88,7 @@
         <tr>
           <th>Nimi</th>
           <th>Osoite</th>
+          <th>City</th>
           <th>Etäisyys</th>
         </tr>
         <!-- add restaurants here -->

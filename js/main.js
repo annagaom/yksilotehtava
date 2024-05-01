@@ -27,10 +27,13 @@ const fetchDailyMenu = async (id) =>
         const lat2 = crd.latitude;
         const dist = distance(lat1, lon1, lat2, lon2);
         restaurant.distance = dist;
+        restaurantIncludeDistance = restaurant;
+        //console.log('restaurant:', restaurantIncludeDistance);
 
         L.marker([lat1, lon1]).addTo(map)
           .bindPopup('<h3>' + restaurant.name + '</h3><p>' + restaurant.address + ', '+ restaurant.city + '</p><p>Distance: ' + dist.toFixed(2) + ' km</p>');
       });
+
 
       function distance(lat1, lon1, lat2, lon2) {
         const R = 6371e3; // Maapallon säde metreinä
@@ -47,41 +50,70 @@ const fetchDailyMenu = async (id) =>
         const dist = (R * c) / 1000; // Etäisyys kilometreinä
         return dist;
       }
-
-      // Esimerkki käytöstä
-      // const distance = calculateDistance(60.16952, 24.93545, 60.17188, 24.94149); // Helsinki: lat1, lon1, lat2, lon2
-      // console.log(distance); // Tulostaa etäisyyden metreinä
-
-      // // Sort restaurants by distance
-      // sortRestaurants(crd.restaurants);
-
-      // Update the table with distances
       createTable(crd.restaurants);
-    }).catch(error => {
-      console.error('Error fetching restaurants:', error);
+
+      function sortRestaurantsByName(restaurants) {
+        restaurants.sort((a, b) =>
+          a.name
+            .toLowerCase()
+            .trim()
+            .localeCompare(b.name.toLowerCase().trim())
+        );
+        console.log('sorted restaurants by name:', restaurants);
+      }
+
+      const findNearestRestaurant = (restaurants) => {
+        restaurants.sort((a, b) => a.distance - b.distance);
+        console.log('sorted restaurants by distance:', restaurants);
+        console.log('nearest restaurant:', restaurants[0]);
+        return restaurants[0];
+      }
+
+      const nearestRestaurant = findNearestRestaurant(restaurants);
+      console.log('nearest restaurant:', nearestRestaurant);
+      //handleTableRowClick(tr, nearestRestaurant, dialogNode);
+      L.marker([nearestRestaurant.location.coordinates[1], nearestRestaurant.location.coordinates[0]],{icon: orangeIcon}).addTo(map)
+        .bindPopup('Lähin ravintola')
+        .openPopup();
+
     });
 
-    L.marker([crd.latitude, crd.longitude]).addTo(map)
+    const greenIcon = L.icon({
+      iconUrl: '/image/green-marker.png',
+      iconSize: [25, 40],
+      popupAnchor: [15, -16]
+    });
+    const orangeIcon = L.icon({
+      iconUrl: '/image/orange-marker.png',
+      iconSize: [25, 40],
+      popupAnchor: [15, -16]
+    });
+
+    L.marker([crd.latitude, crd.longitude],{icon: greenIcon}).addTo(map)
       .bindPopup('I am here.')
       .openPopup();
+
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
   }
 
+
 // Function to be called if an error occurs while retrieving location information
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-const sortRestaurants = (restaurants) => {
+
+function sortRestaurantsByName(restaurants) {
   restaurants.sort((a, b) =>
     a.name
       .toLowerCase()
       .trim()
       .localeCompare(b.name.toLowerCase().trim())
-  )
+  );
+  console.log('sorted restaurants by name:', restaurants);
 }
 
 const createPhoneLink = (phone) => {
@@ -131,10 +163,13 @@ const createTable = async (restaurants) => {
   for (const restaurant of restaurants) {
     const menu = await fetchDailyMenu(restaurant._id);
     const tr = document.createElement("tr");
+    const distance = restaurant.distance.toFixed(2) + " km";
+
     tr.innerHTML = `
       <td>${restaurant.name}</td>
       <td>${restaurant.address}</td>
-      <td>${restaurant.distance.toFixed(2)} km</td>
+      <td>${restaurant.city}</td>
+      <td>${restaurant.distance}</td>
     `;
     tableNode.appendChild(tr);
 
@@ -145,13 +180,33 @@ const createTable = async (restaurants) => {
 };
 
 
+
+
 const buildWebsite = async () => {
+  try {
+    const restaurants = await fetchRestaurants();
 
-  const restaurants = await fetchRestaurants()
-  sortRestaurants(restaurants)
+    //const sortBy = updateSelectedSortBy();
+    // Sort restaurants based on selected sorting option
+    try {
+       if (sortBy === "Nimi") {
+        sortRestaurantsByName(restaurants);
+      // } else if (sortBy === "Etäisyys") {
+      //   sortRestaurantsByDistance(restaurants);
+      } else if (sortBy === "Kaupunki") {
+        sortRestaurantsByCity(restaurants);
+      }
 
-  createTable(restaurants)
-}
+      // Update the table based on the sorted and filtered data
+      createTable(restaurants);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    console.error('Error building website:', error);
+  } catch (error) {
+    console.error('Error fetching restaurants:', error);
+  }
+};
 
 buildWebsite()
 
@@ -166,25 +221,25 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 
 
 
-// kun painaa registeroidy button, niin tulee registeri formi ikkuna
-registerForm.style.display = 'none';
-document.querySelector('#registerBtn').addEventListener('click', () => {
-    registerForm.style.display = 'block';
-});
-function registerUser(e) {
-    e.preventDefault();
+// // kun painaa registeroidy button, niin tulee registeri formi ikkuna
+// registerForm.style.display = 'none';
+// document.querySelector('#registerBtn').addEventListener('click', () => {
+//     registerForm.style.display = 'block';
+// });
+// function registerUser(e) {
+//     e.preventDefault();
 
-    const firstname = registerForm['etunimi'].value;
-    const laskname = registerForm['sukunimi'].value;
+//     const firstname = registerForm['etunimi'].value;
+//     const laskname = registerForm['sukunimi'].value;
 
-    const email = registerForm['email'].value;
-    const phone = registerForm['puhelin'].value;
-    const password = registerForm['password'].value;
+//     const email = registerForm['email'].value;
+//     const phone = registerForm['puhelin'].value;
+//     const password = registerForm['password'].value;
 
-    auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        console.log(cred.user);
-        registerForm.reset();
-    });
-}
-registerForm.addEventListener('submit', registerUser);
+//     auth.createUserWithEmailAndPassword(email, password).then(cred => {
+//         console.log(cred.user);
+//         registerForm.reset();
+//     });
+// }
+// registerForm.addEventListener('submit', registerUser);
 
