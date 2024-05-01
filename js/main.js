@@ -32,11 +32,6 @@ const fetchDailyMenu = async (id) =>
           .bindPopup('<h3>' + restaurant.name + '</h3><p>' + restaurant.address + ', '+ restaurant.city + '</p><p>Distance: ' + dist.toFixed(2) + ' km</p>');
       });
 
-      // function distance(lat1, lon1, lat2, lon2) {
-      //   const dist = Math.sqrt((lat1 - lat2) ** 2 + (lon1 - lon2) ** 2);
-      //   return dist;
-      // }
-
       function distance(lat1, lon1, lat2, lon2) {
         const R = 6371e3; // Maapallon säde metreinä
         const φ1 = lat1 * Math.PI / 180; // Latitude radiaaneina
