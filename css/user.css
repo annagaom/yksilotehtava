@@ -81,7 +81,7 @@ input, nutton, select {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
 
   .form-container  {
     width: 90%;

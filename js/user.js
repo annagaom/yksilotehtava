@@ -1,7 +1,7 @@
 
 
 window.addEventListener('DOMContentLoaded', function() {
-  fetch('http://localhost:3000/api/vi/users/photo')
+  fetch('https://10.120.32.94/auth-api/api/v1/users')
   .then(response => {
       if (!response.ok) {
           throw new Error('Virhe kuvan hakemisessa.');
@@ -33,7 +33,7 @@ function uploadImage(input) {
   var formData = new FormData();
   formData.append('photo', file);
 
-  fetch('http://localhost:3000/api/vi/users', {
+  fetch('http://10.120.32.94/auth-api/api/v1/users/avatar', {
       method: 'POST',
       body: formData
   })

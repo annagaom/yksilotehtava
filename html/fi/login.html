@@ -57,7 +57,7 @@
 
   <div class="aside" id="login-id"><br>
 
-    <form action="https://10.120.x.y/test/form-submission/" method="get">
+    <form>
       <label for="kayttaja_tunnus">Käyttäjätunnus*</label>
       <input
         type="text" name="kayttaja_tunnus"
@@ -76,9 +76,10 @@
       />
       <p></p>
       <a href="oma.html">
-          <button type="submit" >Kirjaudu sisään</button>
+          <button type="submit" id = 'loginButton' >Kirjaudu sisään</button>
       </a>
     </form>
+
     <p></p>
     <hr>
     <br>
@@ -115,8 +116,8 @@
         required autofocus
       />
 
-      <button type="submit" >Rekisteröidy</button>
-      <button type="reset">Tyhjennä lomake</button>
+      <button type="rekistiButton" >Rekisteröidy</button>
+      <button type="resetButton">Tyhjennä lomake</button>
       </div>
     </form>
   </div>
