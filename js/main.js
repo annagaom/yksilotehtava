@@ -70,7 +70,6 @@ const fetchDailyMenu = async (id) =>
         return restaurants[0];
       }
 
-
     const greenIcon = L.icon({
       iconUrl: '/image/green-marker.png',
       iconSize: [25, 40],
@@ -89,8 +88,6 @@ const fetchDailyMenu = async (id) =>
       popupAnchor: [15, -16]
     });
 
-
-
     L.marker([crd.latitude, crd.longitude],{icon: greenIcon}).addTo(map)
     .bindPopup('Olet tässä.')
     .openPopup();
@@ -106,32 +103,17 @@ const fetchDailyMenu = async (id) =>
         restaurant.city + '</p><p>Distance: ' + restaurant.distance.toFixed(2) + ' km</p>');
     }
   });
-
-
-
-
-
-
-
-    // console.log('nearest restaurant:', nearestRestaurant);
-    //   //handleTableRowClick(tr, nearestRestaurant, dialogNode);
-    //   L.marker([nearestRestaurant.location.coordinates[1], nearestRestaurant.location.coordinates[0]],{icon: orangeIcon}).addTo(map)
-    //     .bindPopup('<h3>' + nearestRestaurant.name + '</h3><p>' + nearestRestaurant.address + ', '+
-    //     nearestRestaurant.city + '</p><p>Distance: ' + nearestRestaurant.distance.toFixed(2) + ' km</p>');
-    });
-
-
+});
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-  }
+}
 
 
 // Function to be called if an error occurs while retrieving location information
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
-
 
 function sortRestaurantsByName(restaurants) {
   restaurants.sort((a, b) =>
@@ -190,13 +172,13 @@ const createTable = async (restaurants) => {
   for (const restaurant of restaurants) {
     const menu = await fetchDailyMenu(restaurant._id);
     const tr = document.createElement("tr");
-    const distance = restaurant.distance.toFixed(2) + " km";
+
 
     tr.innerHTML = `
       <td>${restaurant.name}</td>
       <td>${restaurant.address}</td>
       <td>${restaurant.city}</td>
-      <td>${restaurant.distance}</td>
+      <td>${restaurant.distance.toFixed(2) +' km'}</td>
     `;
     tableNode.appendChild(tr);
 
