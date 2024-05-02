@@ -188,9 +188,6 @@ const createTable = async (restaurants) => {
   }
 };
 
-
-
-
 const buildWebsite = async () => {
   try {
     const restaurants = await fetchRestaurants();
