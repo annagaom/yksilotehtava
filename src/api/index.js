@@ -1,12 +1,10 @@
 import express from 'express';
-
-//import suosikkiRouter from './routes/suosikit-router.js';
+import favorateRouter from './routes/favorate-router';
+import userRouter from './routes/user-router';
 
 const router = express.Router();
 
-// bind base url for all cat routes to catRouter
-
-
-//router.use('/suosikit', suosikkiRouter);
+router.use('/favorate', favorateRouter);
+router.use('/user', userRouter);
 
 export default router;

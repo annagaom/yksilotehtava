@@ -8,3 +8,4 @@ document.getElementById("kieli").addEventListener("change", function () {
         window.location.href = '../en/index_en.html';
     }
 });
+
