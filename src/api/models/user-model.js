@@ -8,10 +8,10 @@ const listAllUsers = async () => {
 
 const addUser = async (user, file) => {
   const {firstname, lastname, username, password, email, dcookied_accept} = user;
-    const sql = `INSERT INTO users (firstname, lastname, username, password, email, dcookied_accept)
-        VALUES (?, ?, ?, ?, ?, ?)`;
+    const sql = `INSERT INTO users (firstname, lastname, username, password, email, dcookied_accept, photo)
+        VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-    const data = [firstname, lastname, username, password, email, dcookied_accept];
+    const data = [firstname, lastname, username, password, email, dcookied_accept, file?.filename || null];
 
     try {
         const [rows] = await promisePool.execute(sql, params);

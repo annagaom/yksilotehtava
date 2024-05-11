@@ -1,92 +1,108 @@
+
 ###
-GET http://localhost:3000/api/v1/tuote
+GET http://localhost:3000/api/v1/asiakas
 
 
-###get tuote by id
-GET http://localhost:3000/api/v1/tuote/1
-
-### getviimeinen tuote id
-
-GET http://localhost:3000/api/v1/tuote/lastid
-
-### get kategoria by name
-GET http://localhost:3000/api/v1/tuote/name/jääkahvi
-
-
-
-### Upload vito cat image to backend
-POST http://localhost:3000/api/v1/cats
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="cat_name"
-
-Vito
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="owner"
-
-37
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="file"; filename="vito.png"
-Content-Type: image/png
-
-< ./images/vito.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-### Upload veikko cat image to backend
-POST http://localhost:3000/api/v1/cats
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="title"
-
-New cat title
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="user_id"
-
-1
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="file"; filename="veikko.png"
-Content-Type: image/png
-
-< ./images/veikko.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-
-### Upload vito gif cat image to backend
-# should save file as .jpg
-POST http://localhost:3000/api/v1/cats
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="title"
-
-New cat title
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="user_id"
-
-1
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="file"; filename="vito.png"
-Content-Type: image/gif
-
-< ./images/vito.png
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-
-###Delete tuote by id
-DELETE http://localhost:3000/api/v1/tuote/2
-
-
-###Update tuote by id, käydä postman to update
-PUT http://localhost:3000/api/v1/tuote/2
-Content-Type: from-data
+### uusi rekisteröityminen
+POST http://localhost:3000/api/v1/asiakas
+Content-Type: application/json
 
 {
-    "tuote_nimi": "mansikkakakku_pala",
-    "tuote_kuva": "",
-    "tuote_hinta": "3.25",
-    "tuote_kustannus": "2.00",
-    "tyyppi_id": ""
+    "firstname": "Anna",
+    "lastname": "Ansku",
+    "username": "anna",
+    "password": "123",
+    "email": "anna@abc.fi",
+    "cookies_accept": "1 "
+
 }
 
+### uusi kirjautuminen
+POST http://localhost:3000/api/v1/asiakas/login
+Content-Type: application/json
+
+{
+"tunnus": "squirrel", "salasana": "squirrel22"
+}
+
+###get user by username
+GET http://localhost:3000/api/v1/asiakas/name/lalan
+
+###get user by id
+GET http://localhost:3000/api/v1/asiakas/23
+
+###update user
+PUT http://localhost:3000/api/v1/asiakas/6
+Content-Type: application/json
+
+{
+    "etunimi": "Lali",
+    "sukunimi": "Viisku",
+    "tunnus": "iisin",
+    "salasana": "12345",
+    "rooli": "admin",
+    "email": "ghd@asccafe.fi",
+    "puhelin": "1234567",
+    "syntymapaiva": "2009-04-05",
+    "ehdot_hyvaksytty": "true",
+    "allennus_ryhma": ""
+}
+
+
+
+### uusi tuote
+POST http://localhost:3000/api/v1/tuote
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tuote_nimi"
+
+定制蛋糕
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tuote_kuvaus"
+
+我们提供独特的定制蛋糕，完全根据客户的要求设计。当您下订单时，我们会通过电子邮件与您联系，以确认所有细节。我们制作各种活动的蛋糕，如生日、婚礼和公司活动，确保最终产品符合您的期望。
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tuote_hinta"
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tuote_kustannus"
+
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tyyppi_id"
+
+59
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="tuote_kuva"; filename="custom.jpg"
+Content-Type: image/jpeg
+
+< kuvat/kakut/custom.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### update user info
+PUT http://localhost:3000/api/v1/asiakas/info/71
+Content-Type: application/json
+
+{
+  "etunimi": "Heidi",
+  "sukunimi": "Pappila",
+  "tunnus": "squirrel",
+  "email": "squirrel@metropolia.fi",
+  "puhelin": "123456789"
+}
+
+### update user password
+PUT http://localhost:3000/api/v1/asiakas/password/71
+Content-Type: application/json
+
+{
+  "salasana": "squirrel22"
+}
+
+###
+GET http://localhost:3000/api/v1/asiakas/info/71
+
+### check alennusryhmä
+GET http://localhost:3000/api/v1/asiakas/alennus/71
