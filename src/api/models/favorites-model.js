@@ -1,12 +1,12 @@
 import e from 'express';
 import promisePool from '../../utils/database.js';
 
-const listAllFavorates = async () => {
+const listAllFavorites = async () => {
     const [rows] = await promisePool.query('SELECT * FROM favorites');
     return rows;
 };
 
-const findSuosikkiByUserId = async (id) => {
+const findFavoriteByUserId = async (id) => {
   const [rows] = await promisePool.execute(
       'SELECT * FROM favorites WHERE favorite_id = ?',
       [id]
@@ -17,7 +17,7 @@ const findSuosikkiByUserId = async (id) => {
   return rows;
 };
 
-const addFavorate = async (favorate) => {
+const addFavorite = async (favorite) => {
   const {
     restaurant_id,
     company,
@@ -27,7 +27,7 @@ const addFavorate = async (favorate) => {
     puh,
     email,
     distance
-    } = favorate;
+    } = favorite;
 
   const sql = `INSERT INTO favorites (
     restaurant_id,
@@ -63,7 +63,7 @@ const addFavorate = async (favorate) => {
   }
 };
 
-const removeFavorateByRestaurantId = async (id) => {
+const removeFavoriteByRestaurantId = async (id) => {
   const connection = await promisePool.getConnection();
   try {
       const [rows] = await promisePool.execute(
@@ -75,7 +75,7 @@ const removeFavorateByRestaurantId = async (id) => {
       }
       await connection.commit();
       return {
-          message: 'Suosikki deleted',
+          message: 'Favorite deleted',
       };
   } catch (error) {
       await connection.rollback();
@@ -87,8 +87,8 @@ const removeFavorateByRestaurantId = async (id) => {
 };
 
 export {
-  listAllFavorates,
-  findSuosikkiByUserId,
-  addFavorate,
-  removeFavorateByRestaurantId
+  listAllFavorites,
+  findFavoriteByUserId,
+  addFavorite,
+  removeFavoriteByRestaurantId
 };

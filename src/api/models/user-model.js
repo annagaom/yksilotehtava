@@ -105,7 +105,7 @@ const updateUserPassword = async (userId, hashedNewPassword) => {
 export {
   listAllUsers,
   addUser,
-  findUserByUsername,,
+  findUserByUsername,
   removeUserByUserId,
   updateUser,
   updateUserPassword

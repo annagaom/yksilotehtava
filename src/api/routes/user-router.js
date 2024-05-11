@@ -8,7 +8,7 @@ import {
   putUser,
   deleteUserByUserId,
   updatePasswordController
-} from '../routes/user-routes.js';
+} from '../controllers/user-controller.js';
 
 const userRouter = express.Router();
 

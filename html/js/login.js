@@ -1,44 +1,129 @@
+'use strict';
+
+/**
+ * Hakee valitun kielen HTML-sivulta.
+ * @returns {string} Valittu kieli tai 'FI' oletusarvoisesti, jos mitään ei ole valittu.
+ */
+function getSelectedLanguage() {
+    const kieli = document.getElementById('kieli');
+    return kieli && kieli.value ? kieli.value : 'FI';
+}
+
 document.addEventListener('DOMContentLoaded', function () {
-  const loginButton = document.getElementById('loginButton');
+    /**
+     * Tapahtumankäsittelijä, joka suoritetaan, kun DOM on ladattu.
+     */
+    const loginButton = document.getElementById('login-button');
+    const selectedLanguage = getSelectedLanguage();
 
-  if (loginButton) {
-    loginButton.addEventListener('click', async function (event) {
-      event.preventDefault();
+    if (loginButton) {
+        loginButton.addEventListener('click', function (event) {
+            event.preventDefault();
 
-      const username = document.getElementById('kayttaja_tunnus').value;
-      const password = document.getElementById('salasana').value;
-      console.log(username);
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
 
-      try {
-        const response = await fetch(`https://10.120.32.94/auth-api/api/v1/users`);
+            /**
+            * Kirjautumiseen tarvittavat tiedot.
+            * @type {{tunnus: string, salasana: string}}
+            */
+            const data = {
+                tunnus: username,
+                salasana: password,
+            };
+            /**
+                         * Lähettää kirjautumispyynnön palvelimelle ja käsittelee vastauksen.
+                         */
+            fetch('http://localhost:3000/api/v1/asiakas/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    const token = data.token;
 
-        if (response.ok) {
-          const users = await response.json();
-          const findUser = users.find(user => user.username === username);
-          console.log(findUser);
+                    if (token) {
+                        localStorage.setItem('authToken', token);
 
-          if (findUser) {
-            if (findUser.password === password) {
-              const token = findUser.token; // Retrieve token from findUser
-              localStorage.setItem('token', token); // Store token in localStorage
-              console.log(token); // Log the token to console
+                        /**
+                         * Ohjaa käyttäjä valitun kielen mukaiseen sivuun.
+                         */
+                        let targetPage = '';
+                        switch (selectedLanguage) {
+                            case 'EN':
+                                targetPage = '../../html/en/7Kayttaja_en.html';
+                                break;
+                            case 'CN':
+                                targetPage = '../../html/cn/7Kayttaja_cn.html';
+                                break;
+                            case 'ET':
+                                targetPage = '../../html/et/7Kayttaja_et.html';
+                                break;
+                            case 'SV':
+                                targetPage = '../../html/sv/7Kayttaja_sv.html';
+                                break;
+                            case 'FI':
+                            default:
+                                targetPage = '../../html/fi/7Kayttaja.html';
+                                break;
+                        }
 
-              // Redirect to 'oma.html' only after successfully setting the token
-              window.location.href = '../../html/fi/oma.html';
-            } else {
-              alert('Invalid username or password');
-            }
-          } else {
-            alert('Invalid username or password');
-          }
-        } else {
-          throw new Error('User hakuminen epäonnistui');
-        }
-      } catch (error) {
-        alert(error.message);
-      }
-    });
-  }
+                        window.location.href = targetPage;
+                        /**
+                         * Näyttää virheilmoituksen, jos kirjautuminen ei onnistu.
+                         */
+                    } else {
+                        switch (selectedLanguage) {
+                            case 'EN':
+                                alert('An error occurred during login. Please try again later.');
+                                break;
+                            case 'CN':
+                                alert('登录时发生错误。请稍后再试。');
+                                break;
+                            case 'ET':
+                                alert('Sisselogimisel ilmnes viga. Palun proovi hiljem uuesti.');
+                                break;
+                            case 'SV':
+                                alert('Ett fel uppstod vid inloggning. Försök igen senare.');
+                                break;
+                            case 'FI':
+                            default:
+                                alert('Virhe kirjautumisessa. Yritä myöhemmin uudelleen.');
+                                break;
+                        }
+                    }
+                })
+                .catch(error => {
+                    /**
+                    * Näyttää virheilmoituksen, jos pyyntö epäonnistuu.
+                    */
+                    switch (selectedLanguage) {
+                        case 'EN':
+                            alert('Login failed. Please check your username and password.');
+                            break;
+                        case 'CN':
+                            alert('登录失败。请检查您的用户名和密码。');
+                            break;
+                        case 'ET':
+                            alert('Sisselogimine ebaõnnestus. Kontrolli oma kasutajanime ja parooli.');
+                            break;
+                        case 'SV':
+                            alert('Inloggningen misslyckades. Kontrollera ditt användarnamn och lösenord.');
+                            break;
+                        case 'FI':
+                        default:
+                            alert('Kirjautuminen epäonnistui. Tarkista käyttäjätunnus ja salasana.');
+                            break;
+                    }
+                });
+        });
+    }
 });
-
 
