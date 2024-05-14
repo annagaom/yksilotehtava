@@ -85,10 +85,6 @@ dialog {
 }
 
 
-
-
-
-
 /* Media query for screens with a maximum width of 450px */
 @media screen and (max-width: 500px) {
   .select-container {

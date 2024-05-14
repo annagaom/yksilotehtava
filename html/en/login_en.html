@@ -60,24 +60,24 @@
     <form action="https://10.120.x.y/test/form-submission/" method="get">
       <label for="kayttaja_tunnus">Käyttäjätunnus*</label>
       <input
-        type="text" name="kayttaja_tunnus"
-        id="kayttaja_tunnus"
+        type="text" name="login-username"
+        id="login-username"
         placeholder="Syötä käyttäjätunnus"
         required autofocus
       />
 
-      <label for="salasana">Salasana*</label>
+      <label for="login-passaword">Salasana*</label>
       <input
-        type="text" name="salasana"
-        id="salasana"
+        type="text" name="login-passaword"
+        id="login-password"
         placeholder="Syötä salasana"
         required autofocus
 
       />
       <p></p>
-      <a href="oma.html">
-          <button type="submit" >Kirjautu sisään</button>
-      </a>
+
+        <button type="submit" >Kirjautu sisään</button>
+
     </form>
     <p></p>
     <hr>
@@ -102,6 +102,8 @@
         placeholder="Sukunimi"
         required autofocus
       />
+      <label for="photo">Profiilikuva::</label>
+      <input type="file" id="photo" name="photo" accept="image/*">
 
       <label for="name">Käyttäjätunnus*</label>
       <input
@@ -121,29 +123,16 @@
         required autofocus
       />
 
-      <label for="email">Sähköposti*</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Sähköposti"
-        required autofocus
-      />
-
-      <label for="today">Päivämäärä</label>
-      <input
-        type="date"
-        name="date"
-        id="today"
-      />
-
       <div class="checkbox-container">
         <input type="checkbox" id="accept-1" name="accept" value="1">
         <label for="accept-1">Hyväksyt ehdot</label><br>
       </div>
-      <button type="submit" >Rekisteröidy</button>
+
+      <div>
       <button type="reset">Tyhjennä lomake</button>
+      <button type="submit" >Rekisteröidy</button>
       </div>
+
     </form>
   </div>
 </body>

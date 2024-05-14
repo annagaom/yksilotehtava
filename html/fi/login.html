@@ -58,26 +58,26 @@
   <div class="aside" id="login-id"><br>
 
     <form>
-      <label for="kayttaja_tunnus">Käyttäjätunnus*</label>
+      <label for="login-username">Käyttäjätunnus*</label>
       <input
-        type="text" name="kayttaja_tunnus"
-        id="kayttaja_tunnus"
+        type="text" name="login-username"
+        id="login-username"
         placeholder="Syötä käyttäjätunnus"
         required autofocus
       />
 
-      <label for="salasana">Salasana*</label>
+      <label for="login-password">Salasana*</label>
       <input
-        type="text" name="salasana"
-        id="salasana"
+        type="text" name="login-password"
+        id="login-password"
         placeholder="Syötä salasana"
         required autofocus
 
       />
       <p></p>
-      <a href="oma.html">
-          <button type="submit" id = 'loginButton' >Kirjaudu sisään</button>
-      </a>
+
+      <button type="submit" id ="loginButton" >Kirjaudu sisään</button>
+
     </form>
 
     <p></p>
@@ -88,6 +88,24 @@
   </div>
   <div id="register-id">
     <form method="post" class="form-container">
+      <label for="firstname">Etunimi*</label>
+      <input
+        type="text" name="firstname"
+        id="firstname"
+        placeholder="Etunimi"
+        required autofocus
+      />
+
+      <label for="lastname">Sukunimi*</label>
+      <input
+        type="text" name="lastname"
+        id="lastname"
+        placeholder="Sukunimi"
+        required autofocus
+      />
+
+      <label for="photo">Profiilikuva:</label>
+      <input type="file" id="photo" name="photo" accept="image/*">
 
       <label for="username">Käyttäjätunnus*</label>
       <input
@@ -106,18 +124,9 @@
         placeholder="salasana"
         required autofocus
       />
-
-      <label for="email">Sähköposti*</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Sähköposti"
-        required autofocus
-      />
-
-      <button type="rekistiButton" >Rekisteröidy</button>
       <button type="resetButton">Tyhjennä lomake</button>
+      <button type="rekistiButton" >Rekisteröidy</button>
+
       </div>
     </form>
   </div>

@@ -33,6 +33,7 @@ const getUserByUsername = async (req, res) => {
 
 const postUser = async (req, res) => {
     try {
+
         const result = await addUser(req.body, req.file);
 
         if (!result) {
@@ -50,30 +51,29 @@ const postUser = async (req, res) => {
 
 const userLoginPost = async (req, res) => {
     try {
-        const { tunnus, salasana } = req.body;
+        const { username, password } = req.body;
 
-        if (!tunnus || !salasana) {
+        if (!username || !password) {
             throw new Error('Käyttäjätunnus ja salasana ovat pakollisia');
         }
 
-        const user = await findUserByTunnus(tunnus);
+        const user = await findUserByTunnus(username);
 
         if (!user) {
             return res.status(401).json({ error: 'Väärä käyttäjätunnus tai salasana' });
         }
 
-        const passwordMatch = checkPassword(salasana, user.salasana);
+        const passwordMatch = checkPassword(username, user.username);
 
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Väärä käyttäjätunnus tai salasana' });
         }
 
         const token = jwt.sign(
-            { asiakas_id: user.asiakas_id, tunnus: user.tunnus, role: user.rooli },
-            SECRET_KEY,
-            { expiresIn: '1h' }
-        );
-
+          { user_id: user.user_id, username: user.username},
+          SECRET_KEY,
+          { expiresIn: '2h' }
+      );
         res.status(200).json({ success: true, message: 'Kirjautuminen onnistui', token, asiakas_id: user.asiakas_id });
 
     } catch (error) {

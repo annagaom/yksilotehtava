@@ -9,3 +9,6 @@ document.getElementById("kieli").addEventListener("change", function () {
     }
 });
 
+if (localStorage.getItem('authToken')) {
+    window.location.href = 'oma.html';
+}

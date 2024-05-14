@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
       cb(null, './uploads/');
   },
   filename: function (req, file, cb) {
-      cb(null, file.filename + '-' + Date.now() + ".png");
+    console.log("file in multer filename", file);
+    cb(null, file.filename + '-' + Date.now() + ".png");
   }
 });
 
@@ -27,7 +28,7 @@ const userRouter = express.Router();
 
 userRouter.route('/')
 .get(getUser)
-.post(upload.single('tuote_kuva'), (req, res, next) => {
+.post(upload.single('photo'), (req, res, next) => {
   console.log("req.file", req.file);
   const inputFile = req.file.path;
   const outputFile = req.file.filename;

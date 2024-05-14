@@ -7,23 +7,24 @@ const listAllUsers = async () => {
 };
 
 const addUser = async (user, file) => {
-  const {firstname, lastname, username, password, email, dcookied_accept} = user;
-    const sql = `INSERT INTO users (firstname, lastname, username, password, email, dcookied_accept, photo)
-        VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const {firstname, lastname, username, password} = user;
+    const sql = `INSERT INTO users (firstname, lastname, username, password, photo)
+        VALUES (?, ?, ?, ?, ?)`;
 
-    const data = [firstname, lastname, username, password, email, dcookied_accept, file?.filename || null];
+    const data = [firstname, lastname, username, password, file?.filename || null];
 
-    try {
-        const [rows] = await promisePool.execute(sql, params);
-        if (rows.affectedRows === 0) {
-        console.error("SQL-kysely ei tuottanut tulosta");
-        return false;
-        }
-        return { tuote_id: rows.insertId };
-    } catch (error) {
-        console.error("Virhe SQL-kyselyssä:", error);
-        return false;
-    }
+    const [rows] = await promisePool.execute(sql, data);
+
+  if (rows && rows.affectedRows !== 0) {
+    const user_id = rows.insertId;
+
+    const sqlSelect = `SELECT * FROM asiakas users user_id = ?`;
+    const [userRow] = await promisePool.execute(sqlSelect, [user_id]);
+
+    return userRow[0];
+  } else {
+    return false;
+  }
 };
 
 const findUserByUsername = async (usenamer) => {

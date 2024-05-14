@@ -1,88 +1,73 @@
 
-###
-GET http://localhost:3000/api/v1/asiakas
+### get all users
+GET http://localhost:3000/api/v1/users
 
+###upload image by user id
+POST http://localhost:3000/api/v1/info/2
 
-### uusi rekisteröityminen
-POST http://localhost:3000/api/v1/asiakas
-Content-Type: application/json
+### update password
+PUT http://localhost:3000/api/v1/users/password/2
 
-{
-    "firstname": "Anna",
-    "lastname": "Ansku",
-    "username": "anna",
-    "password": "123",
-    "email": "anna@abc.fi",
-    "cookies_accept": "1 "
-
-}
 
 ### uusi kirjautuminen
-POST http://localhost:3000/api/v1/asiakas/login
+POST http://localhost:3000/api/v1/users/login
 Content-Type: application/json
 
 {
-"tunnus": "squirrel", "salasana": "squirrel22"
+"tunnus": "anna", "salasana": "123"
 }
 
 ###get user by username
-GET http://localhost:3000/api/v1/asiakas/name/lalan
+GET http://localhost:3000/api/v1/users/name/anna
 
-###get user by id
-GET http://localhost:3000/api/v1/asiakas/23
+### delete user by user_id
+GET http://localhost:3000/api/v1/users/info/71
 
-###update user
-PUT http://localhost:3000/api/v1/asiakas/6
+
+
+###uusi user ilman photo
+POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "etunimi": "Lali",
-    "sukunimi": "Viisku",
-    "tunnus": "iisin",
-    "salasana": "12345",
-    "rooli": "admin",
-    "email": "ghd@asccafe.fi",
-    "puhelin": "1234567",
-    "syntymapaiva": "2009-04-05",
-    "ehdot_hyvaksytty": "true",
-    "allennus_ryhma": ""
+    "firstname": "Lali",
+    "lastname": "Viisku",
+    "username": "iisin",
+    "password": "12345",
+    "photo": ""
+
 }
 
 
-
-### uusi tuote
-POST http://localhost:3000/api/v1/tuote
+### uusi user
+POST http://localhost:3000/api/v1/users
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tuote_nimi"
+Content-Disposition: form-data; name="firstname"
 
-定制蛋糕
+Anna
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tuote_kuvaus"
+Content-Disposition: form-data; name="lastname"
 
-我们提供独特的定制蛋糕，完全根据客户的要求设计。当您下订单时，我们会通过电子邮件与您联系，以确认所有细节。我们制作各种活动的蛋糕，如生日、婚礼和公司活动，确保最终产品符合您的期望。
+Ansku
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tuote_hinta"
+Content-Disposition: form-data; name="username"
 
-
+anna
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tuote_kustannus"
+Content-Disposition: form-data; name="password"
 
-
+123
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tyyppi_id"
-
-59
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="tuote_kuva"; filename="custom.jpg"
+Content-Disposition: form-data; name="photo"; filename="cat.jpeg"
 Content-Type: image/jpeg
 
-< kuvat/kakut/custom.jpg
+< kuvat/cat.jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### update user info
-PUT http://localhost:3000/api/v1/asiakas/info/71
+PUT http://localhost:3000/api/v1/users/info/71
 Content-Type: application/json
 
 {
@@ -94,15 +79,10 @@ Content-Type: application/json
 }
 
 ### update user password
-PUT http://localhost:3000/api/v1/asiakas/password/71
+PUT http://localhost:3000/api/v1/users/password/71
 Content-Type: application/json
 
 {
   "salasana": "squirrel22"
 }
 
-###
-GET http://localhost:3000/api/v1/asiakas/info/71
-
-### check alennusryhmä
-GET http://localhost:3000/api/v1/asiakas/alennus/71
