@@ -5,6 +5,51 @@ function getSelectedLanguage() {
     return kieli && kieli.value ? kieli.value : 'FI';
 }
 
+let loginTeksti = '';
+let logoutTeksti = '';
+
+switch (getSelectedLanguage()) {
+    case 'EN':
+        loginTeksti = 'Log in';
+        logoutTeksti = 'Log out';
+        break;
+    case 'FI':
+    default:
+        loginTeksti = 'Kirjaudu sisään';
+        logoutTeksti = 'Kirjaudu ulos';
+};
+
+function updateLoginButton(isLoggedIn) {
+  const loginButton = document.getElementById('loginButton');
+  if (isLoggedIn) {
+      loginButton.textContent = logoutTeksti;
+      loginButton.id = 'logoutButton';
+  } else {
+      loginButton.textContent = loginTeksti;
+      loginButton.id = 'loginButton';
+  }
+}
+
+function checkLoginStatus() {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+      updateLoginButton(true);
+  } else {
+      updateLoginButton(false);
+  }
+
+  return token;
+}
+
+const logoutButton = document.getElementById('logoutButton');
+if (logoutButton) {
+  logoutButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      localStorage.removeItem('authToken');
+      updateLoginButton(false);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
 
   const loginButton = document.getElementById('loginButton');
@@ -46,11 +91,11 @@ document.addEventListener('DOMContentLoaded', function () {
             let targetPage = '';
             switch (selectedLanguage) {
               case 'EN':
-                targetPage = '../en/oma_en.html';
+                targetPage = '../en/user_en.html';
                 break;
               case 'FI':
               default:
-                targetPage = '../fi/oma.html';
+                targetPage = '../fi/user.html';
                 break;
             }
 

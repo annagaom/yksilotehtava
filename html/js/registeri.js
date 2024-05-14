@@ -57,12 +57,12 @@ if (registerButton) {
           switch (selectedLanguage) {
               case 'EN':
                   alert('Registration successful. Welcome!');
-                  targetPage = '../../html/en/oma_en.html';
+                  targetPage = '../../html/en/login_en.html';
                   break;
               case 'FI':
               default:
-                  alert('Rekisteröinti onnistui. Tervetuloa!');
-                  targetPage = '../../html/fi/oma.html';
+                  alert('Rekisteröinti onnistui. Pääset kirjautumaan sisään!');
+                  targetPage = '../../html/fi/login.html';
                   break;
             }
               window.location.href = targetPage;  // Uudelleenohjaus rekisteröinnin jälkeen
