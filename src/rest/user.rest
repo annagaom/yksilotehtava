@@ -2,11 +2,80 @@
 ### get all users
 GET http://localhost:3000/api/v1/users
 
+###get user by username
+GET http://localhost:3000/api/v1/users/name/anna
+
+### delete user by user_id
+GET http://localhost:3000/api/v1/users/info/71
+
+
 ###upload image by user id
 POST http://localhost:3000/api/v1/info/2
 
+###Login
+POST http://localhost:3000/api/v1/users/login
+Content-Type: application/json
+
+{
+  "username": "anna",
+  "password": "123"
+}
+
 ### update password
 PUT http://localhost:3000/api/v1/users/password/2
+
+### update user password
+PUT http://localhost:3000/api/v1/users/password/71
+Content-Type: application/json
+
+{
+  "salasana": "squirrel22"
+}
+
+
+
+### uusi user
+POST http://localhost:3000/api/v1/users
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="firstname"
+
+lan
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="lastname"
+
+li
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="username"
+
+lanlan
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="password"
+
+123
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+lan@anna.fi
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="photo"; filename="tee.jpg"
+Content-Type: image/jpeg
+
+< kuvat/tee.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### update user info
+PUT http://localhost:3000/api/v1/users/info/71
+Content-Type: application/json
+
+{
+  "etunimi": "Heidi",
+  "sukunimi": "Pappila",
+  "tunnus": "squirrel",
+  "email": "squirrel@metropolia.fi",
+  "puhelin": "123456789"
+}
 
 
 ### uusi kirjautuminen
@@ -16,13 +85,6 @@ Content-Type: application/json
 {
 "tunnus": "anna", "salasana": "123"
 }
-
-###get user by username
-GET http://localhost:3000/api/v1/users/name/anna
-
-### delete user by user_id
-GET http://localhost:3000/api/v1/users/info/71
-
 
 
 ###uusi user ilman photo
@@ -38,9 +100,8 @@ Content-Type: application/json
 
 }
 
-
-### uusi user
-POST http://localhost:3000/api/v1/users
+### update user
+PUT http://localhost:3000/api/v1/users
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -65,24 +126,4 @@ Content-Type: image/jpeg
 
 < kuvat/cat.jpeg
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
-
-### update user info
-PUT http://localhost:3000/api/v1/users/info/71
-Content-Type: application/json
-
-{
-  "etunimi": "Heidi",
-  "sukunimi": "Pappila",
-  "tunnus": "squirrel",
-  "email": "squirrel@metropolia.fi",
-  "puhelin": "123456789"
-}
-
-### update user password
-PUT http://localhost:3000/api/v1/users/password/71
-Content-Type: application/json
-
-{
-  "salasana": "squirrel22"
-}
 

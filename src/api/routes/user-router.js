@@ -1,13 +1,15 @@
 import express from 'express';
 import {
   getUser,
-  getUserByUsername,
-  postUser,
-  getUserInfo,
-  userLoginPost,
-  putUser,
-  deleteUserByUserId,
-  updatePasswordController
+    getUserById,
+    getUserByUsername,
+    postUser,
+    putUser,
+    deleteUserByUserId,
+    updatePassword,
+    postUserLogin,
+    getUserPhotoByUserId,
+    putUserPhotoByUserId
 } from '../controllers/user-controller.js';
 import multer from 'multer';
 
@@ -25,7 +27,6 @@ const upload = multer({ storage: storage });
 const userRouter = express.Router();
 
 
-
 userRouter.route('/')
 .get(getUser)
 .post(upload.single('photo'), (req, res, next) => {
@@ -36,15 +37,19 @@ userRouter.route('/')
 });
 
 userRouter.route('/info/:id')
-.get(getUserInfo)
 .put(upload.single('photo'), putUser);
 
 
-userRouter.route('/login').post(userLoginPost);
+userRouter.route('/login').post(postUserLogin);
 userRouter.route('/:id')
-    .put(putUser)
-    .delete(deleteUserByUserId);
-userRouter.route('/password/:id').put(updatePasswordController);
+  .get(getUserById)
+  .put(putUser)
+  .delete(deleteUserByUserId);
+userRouter.route('/password/:id').put(updatePassword);
 userRouter.route('/name/:tunnus').get(getUserByUsername);
+
+userRouter.route('/photo/:id')
+.get(getUserPhotoByUserId)
+.put(upload.single('photo'), putUserPhotoByUserId);
 
 export default userRouter;

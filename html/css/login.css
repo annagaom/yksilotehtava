@@ -21,7 +21,7 @@ main {
   border-radius: 10px; /* Kulman pyöristys */
   padding: 20px; /* Sisennys */
   width: 50%; /* Leveys */
-  margin: 20px auto; /* Keskitä vaakasuunnassa */
+  margin: 30px auto; /* Keskitä vaakasuunnassa */
 }
 
 input, nutton, select {
@@ -45,6 +45,7 @@ input, nutton, select {
   .form-container  {
     width: 90%;
     padding-left: 30px;
+
   }
   .aside {
     width: 100%;

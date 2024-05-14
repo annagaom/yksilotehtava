@@ -6,31 +6,67 @@ const listAllUsers = async () => {
   return rows;
 };
 
-const addUser = async (user, file) => {
-  const {firstname, lastname, username, password} = user;
-    const sql = `INSERT INTO users (firstname, lastname, username, password, photo)
-        VALUES (?, ?, ?, ?, ?)`;
+const findUserById = async (id) => {
+  const [rows] = await promisePool.execute(
+      'SELECT * FROM kayttaja WHERE user_id = ?',
+      [id]
+  );
+  if (rows.length === 0) {
+      return false;
+  }
+  return rows[0];
+};
 
-    const data = [firstname, lastname, username, password, file?.filename || null];
 
-    const [rows] = await promisePool.execute(sql, data);
+const addUser = async (user) => {
+  const { firstname, lastname, username, password, email, photo } = user;
 
-  if (rows && rows.affectedRows !== 0) {
-    const user_id = rows.insertId;
+  // Tarkista, onko käyttäjänimi jo olemassa
+  const checkUserSql = 'SELECT * FROM users WHERE username = ?';
+  const [existingUsers] = await promisePool.execute(checkUserSql, [username]);
 
-    const sqlSelect = `SELECT * FROM asiakas users user_id = ?`;
-    const [userRow] = await promisePool.execute(sqlSelect, [user_id]);
+  if (existingUsers.length > 0) {
+      throw new Error('Käyttäjänimi on jo käytössä.');
+  }
 
-    return userRow[0];
-  } else {
-    return false;
+  const sql = 'INSERT INTO users (firstname, lastname, username, password, email, photo) VALUES (?, ?, ?, ?, ?, ?)';
+  const data = [firstname, lastname, username, password, email, photo];
+
+  try {
+      const [rows] = await promisePool.execute(sql, data);
+      if (rows.affectedRows === 1) {
+          return { user_id: rows.insertId };
+      } else {
+          return false;
+      }
+  } catch (error) {
+      console.error('Error executing SQL query:', error);
+      return false;
   }
 };
+
+const userLogin = async (username, password) => {
+  const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
+  const data = [username, password];
+
+  try {
+      const [rows] = await promisePool.execute(sql, data);
+      if (rows.length === 0) {
+          return false;
+      } else {
+          return rows[0]; // Palautetaan ensimmäinen löydetty käyttäjä
+      }
+  } catch (error) {
+      console.error('Error executing SQL query:', error);
+      return false;
+  }
+};
+
 
 const findUserByUsername = async (usenamer) => {
   try {
     const [rows] = await promisePool.execute(
-      'SELECT * FROM users WHERE usenamer = ?',
+      'SELECT * FROM users WHERE username = ?',
       [usenamer]
     );
     if (rows.length === 0) {
@@ -103,12 +139,50 @@ const updateUserPassword = async (userId, hashedNewPassword) => {
   }
 };
 
+const updateUserPhotoyserId = async (file, user_id) => {
+  const sql = 'UPDATE users SET photo = ? WHERE users_id = ?';
+  const values = [file, user_id];
+
+  try {
+    const [result] = await promisePool.execute(sql, values);
+
+    if (result.affectedRows === 0) {
+      return false;
+    }
+    return {message: 'success'};
+  } catch (error) {
+    console.error("Virhe kuvan päivittämisessä:", error);
+    throw error;
+  }
+}
+
+const findUserPhotoByUserId = async (user_id) => {
+  try {
+
+    const [rows] = await promisePool.execute(
+      'SELECT photo FROM users WHERE users_id = ?',
+      [user_id]
+    );
+    if (rows.length === 0) {
+      return false;
+    }
+    return rows[0];
+  } catch (error) {
+    console.error('Error finding user photo by user id:', error);
+    return false;
+  }
+};
+
 export {
   listAllUsers,
   addUser,
+  findUserById,
+  userLogin,
   findUserByUsername,
   removeUserByUserId,
   updateUser,
-  updateUserPassword
+  updateUserPassword,
+  updateUserPhotoyserId,
+  findUserPhotoByUserId
 
 };
