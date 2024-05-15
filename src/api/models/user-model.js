@@ -45,22 +45,23 @@ const addUser = async (user) => {
   }
 };
 
-const userLogin = async (username, password) => {
-  const sql = 'SELECT * FROM users WHERE username = ? AND password = ?';
-  const data = [username, password];
+// const userLogin = async (username) => {
+//   const sql = 'SELECT * FROM users WHERE username = ?';
+//   const data = [username];
 
-  try {
-      const [rows] = await promisePool.execute(sql, data);
-      if (rows.length === 0) {
-          return false;
-      } else {
-          return rows[0]; // Palautetaan ensimmäinen löydetty käyttäjä
-      }
-  } catch (error) {
-      console.error('Error executing SQL query:', error);
-      return false;
-  }
-};
+//   try {
+//       const [rows] = await promisePool.execute(sql, data);
+//       if (rows.length === 0) {
+//           return false;
+//       } else {
+//         console.log('Model, return user by username, rows: ', rows);
+//           return rows[0]; // Return the first found user
+//       }
+//   } catch (error) {
+//       console.error('Error executing SQL query:', error);
+//       return false;
+//   }
+// };
 
 
 const findUserByUsername = async (usenamer) => {
@@ -177,7 +178,7 @@ export {
   listAllUsers,
   addUser,
   findUserById,
-  userLogin,
+  // userLogin,
   findUserByUsername,
   removeUserByUserId,
   updateUser,

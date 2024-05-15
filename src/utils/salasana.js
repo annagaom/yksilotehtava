@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
 
-export const checkPassword = (salasana, hashedPassword) => {
-    return bcrypt.compareSync(salasana, hashedPassword);
+export const checkPassword = (password, hashedPassword) => {
+    return bcrypt.compareSync(password, hashedPassword);
 };

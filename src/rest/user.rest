@@ -41,15 +41,15 @@ Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0g
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="firstname"
 
-lan
+yun
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="lastname"
 
-li
+gao
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="username"
 
-lanlan
+annagao
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="password"
 
@@ -57,7 +57,7 @@ Content-Disposition: form-data; name="password"
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="email"
 
-lan@anna.fi
+yun@jslak.fi
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="photo"; filename="tee.jpg"
 Content-Type: image/jpeg
@@ -75,15 +75,6 @@ Content-Type: application/json
   "tunnus": "squirrel",
   "email": "squirrel@metropolia.fi",
   "puhelin": "123456789"
-}
-
-
-### uusi kirjautuminen
-POST http://localhost:3000/api/v1/users/login
-Content-Type: application/json
-
-{
-"tunnus": "anna", "salasana": "123"
 }
 
 

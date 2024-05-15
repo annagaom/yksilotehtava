@@ -1,4 +1,9 @@
 'use strict';
+/*funktio kielen vaihtoon */
+function getSelectedLanguage() {
+  const kieli = document.getElementById('kieli');
+  return kieli && kieli.value ? kieli.value : 'FI';
+}
 
 document.getElementById("kieli").addEventListener("change", function () {
     var selectedLanguage = this.value;
@@ -9,6 +14,4 @@ document.getElementById("kieli").addEventListener("change", function () {
     }
 });
 
-if (localStorage.getItem('authToken')) {
-    window.location.href = 'oma.html';
-}
+

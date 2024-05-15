@@ -2,7 +2,7 @@ import {
   listAllUsers,
   addUser,
   findUserById,
-  userLogin,
+  // userLogin,
   findUserByUsername,
   removeUserByUserId,
   updateUser,
@@ -13,7 +13,7 @@ import {
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { checkPassword } from '../../utils/salasana.js';
+import { checkPassword} from '../../utils/salasana.js';
 import config from '../../config/config.js';
 const SECRET_KEY = config.SECRET_KEY;
 
@@ -82,15 +82,23 @@ const postUserLogin = async (req, res) => {
           throw new Error("Käyttäjätunnus ja salasana ovat pakollisia.");
       }
 
-      const user = await findUserByUsername(username, password);
+      const user = await findUserByUsername(username);
+      console.log('Finf user by username: ',  user);
 
       if (!user) {
+          console.log(`No user found with username: ${username}`);
           return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
       }
+      console.log(`Logging in user: ${username}`);
+      console.log(`Stored password hash: ${user.password}`);
+      console.log(`Input password: ${password}`);
+
       const passwordCorrect = checkPassword(password, user.password);
+      console.log(`Password correct: ${passwordCorrect}`);
 
       if (!passwordCorrect) {
-          throw new Error("SECRET_KEY ei ole asetettu.");
+          console.log(`Incorrect password for user: ${username}`);
+          return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
       }
 
       const token = jwt.sign(
@@ -105,7 +113,10 @@ const postUserLogin = async (req, res) => {
       console.error("Virhe kirjautumisessa:", error.message);
       res.status(400).json({ error: error.message });
   }
-}
+};
+
+
+
 
 
 const putUser = async (req, res) => {

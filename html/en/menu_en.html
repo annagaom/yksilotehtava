@@ -5,16 +5,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ravintolat</title>
-  <link href="../css/main.css" rel="stylesheet">
-  <link href="../css/index.css" rel="stylesheet">
-
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js" defer></script>
-
-  <!-- <script src="../js/main.js" defer></script> -->
+  <title>Restaurants</title>
+  <link href="../css/main.css" rel="stylesheet" >
+  <link href="../css/login.css" rel="stylesheet" >
   <script src="../js/default.js" defer></script>
-  <script src="../js/main.js" defer></script>
+  <script src="../js/login.js" defer></script>
+  <script src="../js/registeri.js" defer></script>
+
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 
@@ -59,42 +56,25 @@
     <hr>
   </header>
 
-  <main>
-    <div class="aside">
-      <h1>Map</h1>
-      <div id="map"></div>
-    </div>
-
-    <div class="table-container">
-      <h1>Restaurants</h1>
-      <div class="select-container"></div>
-      <label for="choicebox"> Sort by:</label>
-
-      <!-- Wrap the select element in a div -->
-
-      <select id="choicebox">
-        <option value="" selectid>Choose</option>
-        <option value="name">Naem</option>
-        <option value="distance">Distance</option>
+  <div><br>
+    <div>
+      <label for="menuType">Valitse tyyppi:</label>
+      <select id="menuType">
+        <option value="daily" selected>Daily menu</option>
+        <option value="weekly">Weekly menu</option>
       </select>
 
-    <p></p>
 
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Distance</th>
-      </tr>
-      <!-- add restaurants here -->
-    </table>
+    <form id="menuList">
+
+    </form>
+
+
   </div>
-    <!-- modal -->
-    <dialog>
-      <!-- add restaurant info here when restaurant is clicked -->
-    </dialog>
-    </div>
-  </main>
-</body>
+  <div id="register-id">
+    <form class="form-container">
 
+    </form>
+  </div>
+</body>
 </html>

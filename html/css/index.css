@@ -10,6 +10,9 @@
 tr {
   text-align: left;
 }
+.menuButton {
+  margin-left: 100px
+}
 
 .select-container {
   display: inline-block;
