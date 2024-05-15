@@ -38,15 +38,25 @@ async function fetchAndLogData() {
     const weeklyMenuFi = await fetchWeeklyMenuFi(restaurantId);
     const weeklyMenuEn = await fetchWeeklyMenuEn(restaurantId);
 
-    if (selectedTypeFi && selectedTypeFi.value === "dailyFi") {
-      displayDailyMenu(dailyMenuFi);
-    } else if (selectedTypeFi && selectedTypeFi.value === "weeklyFi") {
-      displayWeeklyMenu(weeklyMenuFi);
-    } else if (selectedTypeEn && selectedTypeEn.value === "dailyEn") {
+    console.log('Daily menu (FI):', dailyMenuFi);
+    console.log('Daily menu (EN):', dailyMenuEn);
+    console.log('Weekly menu (FI):', weeklyMenuFi);
+    console.log('Weekly menu (EN):', weeklyMenuEn);
+
+    const selectedValue = getSelectedValue();
+    console.log('Selected value:', selectedValue);
+
+    if (selectedValue=== "dailyFi") {
+     displayDailyMenu(dailyMenuFi);
+    } else if (selectedValue === "weeklyFi") {
+     displayWeeklyMenu(weeklyMenuFi);
+    } else if (selectedValue === "dailyEn") {
       displayDailyMenu(dailyMenuEn);
-    } else if (selectedTypeEn && selectedTypeEn.value === "weeklyEn") {
+    } else if (selectedValue  === "weeklyEn") {
       displayWeeklyMenu(weeklyMenuEn);
     }
+
+
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -55,9 +65,10 @@ async function fetchAndLogData() {
 const displayDailyMenu = (menu) => {
   const menuList = document.getElementById('menuList');
   menuList.innerHTML = '';
-  menu.forEach(item => {
+
+  menu.courses.forEach(course => {
     const listItem = document.createElement('li');
-    listItem.textContent = item;
+    listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price}<br>Diets: ${course.diets.join(', ')}`;
     menuList.appendChild(listItem);
   });
 };
@@ -65,12 +76,77 @@ const displayDailyMenu = (menu) => {
 const displayWeeklyMenu = (menu) => {
   const menuList = document.getElementById('menuList');
   menuList.innerHTML = '';
-  menu.forEach(item => {
-    const listItem = document.createElement('li');
-    listItem.textContent = item;
-    menuList.appendChild(listItem);
+
+  menu.days.forEach(day => {
+    const dayHeader = document.createElement('h3');
+    dayHeader.textContent = day.date;
+    menuList.appendChild(dayHeader);
+
+    day.courses.forEach(course => {
+      const listItem = document.createElement('li');
+      listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price || 'Not specified'}<br>Diets: ${course.diets.join(', ')}`;
+      menuList.appendChild(listItem);
+    });
   });
 };
 
-// Käynnistää tietojen hakuprosessin, kun dokumentti on ladattu
-document.addEventListener('DOMContentLoaded', fetchAndLogData);
+const getSelectedValue = () => {
+  if (selectLanguage === 'FI') {
+    const selected = document.getElementById('menuTypeFi');
+    if (selected) {
+      const selectedValue = selected.value;
+      console.log('Selected value (FI):', selectedValue);
+      return selectedValue;
+    } else {
+      console.error('Element with ID "menuTypeFi" not found');
+      return null;
+    }
+  } else {
+    const selected = document.getElementById('menuTypeEn');
+    if (selected) {
+      const selectedValue = selected.value;
+      console.log('Selected value (EN):', selectedValue);
+      return selectedValue;
+    } else {
+      console.error('Element with ID "menuTypeEn" not found');
+      return null;
+    }
+  }
+};
+
+const createTable = (menu) => {
+
+
+
+  const table = document.getElementById('menuList');
+  menuList.innerHTML = '';
+
+  const selectedValue = getSelectedValue();
+  console.log('Selected value:', selectedValue);
+
+
+
+
+  };
+
+const buildWebsite = async () => {
+  try {
+    const menu = await fetchAndLogData();
+    createTable(menu);
+  } catch (error) {
+    console.error('Error fetching restaurants:', error);
+  }
+};
+
+
+
+buildWebsite();
+
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+// // Käynnistää tietojen hakuprosessin, kun dokumentti on ladattu
+// document.addEventListener('DOMContentLoaded', fetchAndLogData);

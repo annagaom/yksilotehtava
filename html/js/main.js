@@ -226,7 +226,7 @@ const handleTableRowClick = async (tr, restaurant, dialogNode) => {
 };
 
 const sortList = (restaurants) => {
-  const sortBy = getSelectedValue();
+  const sortBy = updateSelectedValue();
 
   if (sortBy === "name") {
     sortRestaurantsByName(restaurants);
@@ -273,7 +273,7 @@ const createTable = async (restaurants) => {
 };
 
 const updateSelectedValue = () => {
-  const selectLanguage = getSelectedLanguage(); // Ensure this is defined and holds the correct value
+
 
   if (selectLanguage === 'FI') {
     const selected = document.getElementById('sortByFi');
@@ -299,8 +299,13 @@ const updateSelectedValue = () => {
 };
 
 const getSelectedValue = () => {
-  const selected = document.getElementById('sortByFi').value;
-  return selected;
+  if (selectLanguage === 'FI') {
+    const selected = document.getElementById('sortByFi').value;
+    return selected;
+  } else {
+    const selected = document.getElementById('sortByEn').value;
+    return selected;
+  }
 };
 
 const buildWebsite = async () => {
