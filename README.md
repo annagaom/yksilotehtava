@@ -22,7 +22,7 @@ Tehdy:
 
 - Lähdekoodit ovat GitHubissa, myös public-kansiossa.
 
-- Kirjautuminen jää jumiin: vaikka käyttäjätunnus ja salasana ovat oikein ja tulostuvat konsoliin, seuraava rivi näyttää "false", salasana on väärä.
+- Kirjautuminen jää jumiin: vaikka käyttäjätunnus ja salasana ovat oikein ja tulostettu konsoliin, seuraava rivi näyttää "false", salasana on väärä.
 
 
 ![Screenshot](image.png)
