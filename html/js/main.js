@@ -1,40 +1,33 @@
-
+const selectLanguage = getSelectedLanguage();
 
 const makeFetch = async (url) => {
-  const result = await fetch(url)
+  const result = await fetch(url);
+  if (!result.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return await result.json();
+};
 
-  return await result.json()
-}
+const fetchRestaurants = async () => await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants");
 
-const fetchRestaurants = async () =>
-  await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants")
+const fetchDailyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/fi`);
 
-const fetchDailyMenuFi = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
+const fetchDailyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/en`);
 
-const fetchDailyMenuEn = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
+const fetchWeeklyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/fi`);
 
-const fetchWeeklyMenuFi = async (id) =>
-  makeFetch(`https://https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/${idKieli}`)
-
-const fetchWeeklyMenuEn = async (id) =>
-  makeFetch(`https://https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/${idKieli}`)
-
-
+const fetchWeeklyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/en`);
 
 let nearestTeksti = '';
 let menuTeksti = '';
 let idKieli = '';
-let locationTeksti =""
+let locationTeksti = "";
 
-console.log('selected language:', getSelectedLanguage());
 switch (getSelectedLanguage()) {
   case 'EN':
     nearestTeksti = 'Nearest restaurant';
     menuTeksti = 'Menu';
     idKieli = 'en';
-    nearestTeksti = 'Nearest restaurant';
     locationTeksti = 'You are here';
     break;
   case 'FI':
@@ -42,68 +35,32 @@ switch (getSelectedLanguage()) {
     nearestTeksti = 'Lähin ravintola';
     menuTeksti = 'Ruokalista';
     idKieli = 'fi';
-    nearestTeksti = 'Lähin ravintola';
     locationTeksti = 'Olet tässä';
     break;
 }
 
-  function success(pos) {
-    const crd = pos.coords;
+function success(pos) {
+  const crd = pos.coords;
+  const map = L.map('map').setView([60.228982, 25.018456], 12);
 
-    const map = L.map('map').setView([60.228982, 25.018456], 12);
-    // Use the leaflet.js library to show the location on the map (https://leafletjs.com/)
-    fetchRestaurants().then(restaurants => {
-      crd.restaurants = restaurants;
+  fetchRestaurants().then(restaurants => {
+    crd.restaurants = restaurants;
 
-      restaurants.forEach(restaurant => {
-        const lon1 = restaurant.location.coordinates[0];
-        const lat1 = restaurant.location.coordinates[1];
-        const lon2 = crd.longitude;
-        const lat2 = crd.latitude;
-        const dist = distance(lat1, lon1, lat2, lon2);
-        restaurant.distance = dist;
-        restaurantIncludeDistance = restaurant;
-        //console.log('restaurant:', restaurantIncludeDistance);
+    restaurants.forEach(restaurant => {
+      const lon1 = restaurant.location.coordinates[0];
+      const lat1 = restaurant.location.coordinates[1];
+      const lon2 = crd.longitude;
+      const lat2 = crd.latitude;
+      const dist = distance(lat1, lon1, lat2, lon2);
+      restaurant.distance = dist;
+    });
 
-        // L.marker([lat1, lon1]).addTo(map)
-        //   .bindPopup('<h3>' + restaurant.name + '</h3><p>' + restaurant.address + ', '+
-        //   restaurant.city + '</p><p>Distance: ' + dist.toFixed(2) + ' km</p>');
-      });
+    createTable(restaurants);
 
-
-      function distance(lat1, lon1, lat2, lon2) {
-        const R = 6371e3; // Maapallon säde metreinä
-        const φ1 = lat1 * Math.PI / 180; // Latitude radiaaneina
-        const φ2 = lat2 * Math.PI / 180; // Longitude radiaaneina
-        const Δφ = (lat2 - lat1) * Math.PI / 180;
-        const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                  Math.cos(φ1) * Math.cos(φ2) *
-                  Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-        const dist = (R * c) / 1000; // Etäisyys kilometreinä
-        return dist;
-      }
-      createTable(crd.restaurants);
-
-      function sortRestaurantsByName(restaurants) {
-        restaurants.sort((a, b) =>
-          a.name
-            .toLowerCase()
-            .trim()
-            .localeCompare(b.name.toLowerCase().trim())
-        );
-        console.log('sorted restaurants by name:', restaurants);
-      }
-
-      const findNearestRestaurant = (restaurants) => {
-        restaurants.sort((a, b) => a.distance - b.distance);
-        console.log('sorted restaurants by distance:', restaurants);
-        console.log('nearest restaurant:', restaurants[0]);
-        return restaurants[0];
-      }
+    const findNearestRestaurant = (restaurants) => {
+      restaurants.sort((a, b) => a.distance - b.distance);
+      return restaurants[0];
+    };
 
     const greenIcon = L.icon({
       iconUrl: '../image/green-marker.png',
@@ -123,89 +80,108 @@ switch (getSelectedLanguage()) {
       popupAnchor: [15, -16]
     });
 
-    L.marker([crd.latitude, crd.longitude],{icon: greenIcon}).addTo(map)
-    .bindPopup(locationTeksti)
-    .openPopup();
+    L.marker([crd.latitude, crd.longitude], { icon: greenIcon }).addTo(map)
+      .bindPopup(locationTeksti)
+      .openPopup();
+
     const nearestRestaurant = findNearestRestaurant(restaurants);
     restaurants.forEach(restaurant => {
+      const icon = restaurant === nearestRestaurant ? orangeIcon : blueIcon;
+
+      const popupContent = document.createElement('div');
+
       if (restaurant === nearestRestaurant) {
-        L.marker([restaurant.location.coordinates[1], restaurant.location.coordinates[0]],{icon: orangeIcon}).addTo(map)
-
-      } else {
-        L.marker([restaurant.location.coordinates[1], restaurant.location.coordinates[0]], {icon: blueIcon}).addTo(map)
-
+        const nearestMessage = document.createElement('h2');
+        nearestMessage.textContent = nearestTeksti;
+        popupContent.appendChild(nearestMessage);
       }
 
-      crd.restaurants.forEach(restaurant => {
-        const icon = restaurant === nearestRestaurant ? orangeIcon : blueIcon;
+      const h3 = document.createElement('h3');
+      h3.textContent = restaurant.name;
+      popupContent.appendChild(h3);
 
-        const popupContent = document.createElement('div');
+      const p1 = document.createElement('p');
+      p1.textContent = `${restaurant.address}, ${restaurant.city}`;
+      popupContent.appendChild(p1);
 
-        // Add the "Lähin ravintola" message for the nearest restaurant
-        if (restaurant === nearestRestaurant) {
-          const nearestMessage = document.createElement('h2');
-          nearestMessage.textContent = nearestTeksti;
-          popupContent.appendChild(nearestMessage);
-        }
+      const p2 = document.createElement('p');
+      p2.textContent = `Distance: ${restaurant.distance.toFixed(2)} km`;
+      popupContent.appendChild(p2);
 
-        const h3 = document.createElement('h3');
-        h3.textContent = restaurant.name;
-        popupContent.appendChild(h3);
-
-        const p1 = document.createElement('p');
-        p1.textContent = restaurant.address + ', ' + restaurant.city;
-        popupContent.appendChild(p1);
-
-        const p2 = document.createElement('p');
-        p2.textContent = 'Distance: ' + restaurant.distance.toFixed(2) + ' km';
-        popupContent.appendChild(p2);
-
-        const button = document.createElement('button');
-        button.textContent = menuTeksti;
-        button.classList.add('menuButton');
-        button.dataset.id = restaurant.id;
-        button.addEventListener('click', (event) => {
-          const restaurantId = event.target.dataset.id;
-          const kieli = getSelectedLanguage();
-          const targetPage = getMenuPageUrl(kieli);
-          window.location.href = `${targetPage}?id=${restaurantId}`;
-        });
-        popupContent.appendChild(button);
-
-        L.marker([restaurant.location.coordinates[1], restaurant.location.coordinates[0]], { icon }).addTo(map)
-          .bindPopup(popupContent);
+      const button = document.createElement('button');
+      button.textContent = menuTeksti;
+      button.classList.add('menuButton');
+      button.dataset.id = restaurant._id;
+      button.addEventListener('click', (event) => {
+        const restaurantId = event.target.dataset.id;
+        const kieli = getSelectedLanguage();
+        const targetPage = getMenuPageUrl(kieli);
+        window.location.href = `${targetPage}?id=${restaurantId}`;
       });
+      popupContent.appendChild(button);
+
+      L.marker([restaurant.location.coordinates[1], restaurant.location.coordinates[0]], { icon }).addTo(map)
+        .bindPopup(popupContent);
     });
-});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
 }
 
-// Function to be called if an error occurs while retrieving location information
 function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-function sortRestaurantsByName(restaurants) {
+function distance(lat1, lon1, lat2, lon2) {
+  const R = 6371e3;
+  const φ1 = lat1 * Math.PI / 180;
+  const φ2 = lat2 * Math.PI / 180;
+  const Δφ = (lat2 - lat1) * Math.PI / 180;
+  const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const dist = (R * c) / 1000;
+  return dist;
+}
+
+/* sort anfd filter */
+
+function sortRestaurantsByName(restaurants ) {
   restaurants.sort((a, b) =>
-    a.name
-      .toLowerCase()
-      .trim()
-      .localeCompare(b.name.toLowerCase().trim())
+    a.name.toLowerCase().trim().localeCompare(b.name.toLowerCase().trim())
   );
   console.log('sorted restaurants by name:', restaurants);
 }
 
-const createPhoneLink = (phone) => {
-  const cleanedNumber = phone.replaceAll(" ", "").replace(/[a-zA-Z-]+/g, "")
+const filterAndSortRestaurantsByCity = (restaurants, city) => {
+  restaurants.filter((restaurant) => restaurant.city === city);
+  restaurants.sort((a, b) =>
+    a.city.toLowerCase().trim().localeCompare(b.city.toLowerCase().trim())
+  );
+};
 
-  return `<a href="tel:${cleanedNumber}">${cleanedNumber}</a>`
+const filterRestaurantsByCompany= (restaurants, company) => {
+  return restaurants.filter((restaurant) => restaurant.company === company);
+  restaurants.sort((a, b) =>
+    a.company.toLowerCase().trim().localeCompare(b.company.toLowerCase().trim())
+  );
 }
 
+/* create table */
+
+const createPhoneLink = (phone) => {
+  const cleanedNumber = phone.replaceAll(" ", "").replace(/[a-zA-Z-]+/g, "");
+  return `<a href="tel:${cleanedNumber}">${cleanedNumber}</a>`;
+};
+
 const createDialog = (restaurant, dialogNode, menu) => {
-  // ternary operator
-  const phone = restaurant.phone !== "-" ? createPhoneLink(restaurant.phone) : ""
+  const phone = restaurant.phone !== "-" ? createPhoneLink(restaurant.phone) : "";
 
   dialogNode.innerHTML = `
     <h3>${restaurant.name}</h3>
@@ -213,14 +189,22 @@ const createDialog = (restaurant, dialogNode, menu) => {
     <p>${restaurant.company} ${phone}</p>
 
     <form method="dialog">
-      <button class="button">${menuTeksti}</button>
-      <button class = "button">Sulje</button>
-
+      <button id="menuButton" class="button">${menuTeksti}</button>
+      <button class="button" type="submit">Sulje</button>
     </form>
-  `
-  dialogNode.showModal()
-}
+  `;
 
+  const menuButton = dialogNode.querySelector("#menuButton");
+  menuButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const restaurantId = restaurant._id;
+    const kieli = getSelectedLanguage();
+    const targetPage = getMenuPageUrl(kieli);
+    window.location.href = `${targetPage}?id=${restaurantId}`;
+  });
+
+  dialogNode.showModal();
+};
 
 const handleTableRowClick = async (tr, restaurant, dialogNode) => {
   document.querySelectorAll("tr").forEach((tr) => {
@@ -241,22 +225,44 @@ const handleTableRowClick = async (tr, restaurant, dialogNode) => {
   createDialog(restaurant, dialogNode, menu);
 };
 
+const sortList = (restaurants) => {
+  const sortBy = getSelectedValue();
+
+  if (sortBy === "name") {
+    sortRestaurantsByName(restaurants);
+    console.log('sorted restaurants by name:', restaurants);
+  } else if (sortBy === "city") {
+     filterAndSortRestaurantsByCity(restaurants);
+     console.log('sorted restaurants by city:', restaurants);
+    } else if (sortBy === "company") {
+      filterRestaurantsByCompany(restaurants);
+
+    console.log('sorted restaurants by distance:', restaurants);
+  }
+};
 
 const createTable = async (restaurants) => {
+  sortList(restaurants);
+
   const tableNode = document.querySelector("table");
   const dialogNode = document.querySelector("dialog");
 
-  // Clear existing rows if any
   tableNode.innerHTML = '';
 
   for (const restaurant of restaurants) {
+    const distanceText = restaurant.distance !== undefined
+                         ? `${restaurant.distance.toFixed(2)} km`
+                          : "-";
+
+
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
+    <td>${restaurant.company}</td>
       <td>${restaurant.name}</td>
       <td>${restaurant.address}</td>
       <td>${restaurant.city}</td>
-      <td>${restaurant.distance.toFixed(2)} km</td>
+      <td>${distanceText}</td>
     `;
     tableNode.appendChild(tr);
 
@@ -266,36 +272,52 @@ const createTable = async (restaurants) => {
   }
 };
 
+const updateSelectedValue = () => {
+  const selectLanguage = getSelectedLanguage(); // Ensure this is defined and holds the correct value
+
+  if (selectLanguage === 'FI') {
+    const selected = document.getElementById('sortByFi');
+    if (selected) {
+      const selectedValue = selected.value;
+      console.log('Selected value (FI):', selectedValue);
+      return selectedValue;
+    } else {
+      console.error('Element with ID "sortByFi" not found');
+      return null;
+    }
+  } else {
+    const selected = document.getElementById('sortByEn');
+    if (selected) {
+      const selectedValue = selected.value;
+      console.log('Selected value (EN):', selectedValue);
+      return selectedValue;
+    } else {
+      console.error('Element with ID "sortByEn" not found');
+      return null;
+    }
+  }
+};
+
+const getSelectedValue = () => {
+  const selected = document.getElementById('sortByFi').value;
+  return selected;
+};
 
 const buildWebsite = async () => {
   try {
     const restaurants = await fetchRestaurants();
-
-    //const sortBy = updateSelectedSortBy();
-    // Sort restaurants based on selected sorting option
-    try {
-       if (sortBy === "Nimi") {
-        sortRestaurantsByName(restaurants);
-      // } else if (sortBy === "Etäisyys") {
-      //   sortRestaurantsByDistance(restaurants);
-      } else if (sortBy === "Kaupunki") {
-        sortRestaurantsByCity(restaurants);
-      }
-
-      // Update the table based on the sorted and filtered data
-      createTable(restaurants);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-    console.error('Error building website:', error);
+    createTable(restaurants);
   } catch (error) {
     console.error('Error fetching restaurants:', error);
   }
 };
 
-buildWebsite()
+document.getElementById("sortByFi").addEventListener("change", async () => {
+  const restaurants = await fetchRestaurants();
+  createTable(restaurants);
+});
 
-
+buildWebsite();
 
 const options = {
   enableHighAccuracy: true,
@@ -303,7 +325,6 @@ const options = {
   maximumAge: 0
 };
 
-// Starts the location search
 navigator.geolocation.getCurrentPosition(success, error, options);
 
 function getMenuPageUrl(kieli) {
@@ -315,7 +336,3 @@ function getMenuPageUrl(kieli) {
       return '../fi/menu.html';
   }
 }
-
-
-
-

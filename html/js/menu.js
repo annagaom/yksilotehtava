@@ -1,52 +1,76 @@
+const selectLanguage = getSelectedLanguage();
+const urlParams = new URLSearchParams(window.location.search);
+const restaurantId = urlParams.get('id');
 
+// Käytä restaurantId arvoa tarpeesi mukaan
+console.log('Restaurant ID:', restaurantId);
 
 const makeFetch = async (url) => {
-  const result = await fetch(url)
-
-  return await result.json()
-}
-
-const fetchRestaurants = async () =>
-  await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants")
-
-const fetchDailyMenuFi = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
-
-const fetchDailyMenuEn = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
-
-const fetchWeeklyMenuFi = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/${idKieli}`)
-
-const fetchWeeklyMenuEn = async (id) =>
-  makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/${idKieli}`)
-
-  function success(pos) {
-    const crd = pos.coords;
-
+  try {
+    const result = await fetch(url);
+    if (!result.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return await result.json();
+  } catch (error) {
+    console.error(`Error fetching data from ${url}:`, error);
+    throw error; // Re-throw the error after logging it
   }
+};
 
-  /* creat dialog info */
+const fetchRestaurants = async () => await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants");
 
-const createPhoneLink = (phone) => {
-  const cleanedNumber = phone.replaceAll(" ", "").replace(/[a-zA-Z-]+/g, "")
+const fetchDailyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/fi`);
 
-  return `<a href="tel:${cleanedNumber}">${cleanedNumber}</a>`
+const fetchDailyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/en`);
+
+const fetchWeeklyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/fi`);
+
+const fetchWeeklyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/en`);
+
+async function fetchAndLogData() {
+  try {
+    const selectedTypeFi = document.getElementById("menuTypeFi");
+    const selectedTypeEn = document.getElementById("menuTypeEn");
+
+    const dailyMenuFi = await fetchDailyMenuFi(restaurantId);
+    const dailyMenuEn = await fetchDailyMenuEn(restaurantId);
+    const weeklyMenuFi = await fetchWeeklyMenuFi(restaurantId);
+    const weeklyMenuEn = await fetchWeeklyMenuEn(restaurantId);
+
+    if (selectedTypeFi && selectedTypeFi.value === "dailyFi") {
+      displayDailyMenu(dailyMenuFi);
+    } else if (selectedTypeFi && selectedTypeFi.value === "weeklyFi") {
+      displayWeeklyMenu(weeklyMenuFi);
+    } else if (selectedTypeEn && selectedTypeEn.value === "dailyEn") {
+      displayDailyMenu(dailyMenuEn);
+    } else if (selectedTypeEn && selectedTypeEn.value === "weeklyEn") {
+      displayWeeklyMenu(weeklyMenuEn);
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
 }
 
-const createDialogDaily = (restaurant, dialogNode, menu) => {
-  const phone = restaurant.phone !== "-" ? createPhoneLink(restaurant.phone) : ""
+const displayDailyMenu = (menu) => {
+  const menuList = document.getElementById('menuList');
+  menuList.innerHTML = '';
+  menu.forEach(item => {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    menuList.appendChild(listItem);
+  });
+};
 
-  dialogNode.innerHTML = `
-    <h1>${restaurant.name}</h1>
-    <p>${restaurant.address}, ${restaurant.postalCode}, ${restaurant.city}</p>
-    <p>${restaurant.company} ${phone}</p>
-    <button class = "dailybutton2">${dailyMenuteksti}</button>
-    <button class = "weeklybutton2">${weeklyMenuteksti}</button>
+const displayWeeklyMenu = (menu) => {
+  const menuList = document.getElementById('menuList');
+  menuList.innerHTML = '';
+  menu.forEach(item => {
+    const listItem = document.createElement('li');
+    listItem.textContent = item;
+    menuList.appendChild(listItem);
+  });
+};
 
-    <form method="dialog">
-      <button class = "button">Sulje</button>
-    </form>
-  `}
-
-
+// Käynnistää tietojen hakuprosessin, kun dokumentti on ladattu
+document.addEventListener('DOMContentLoaded', fetchAndLogData);
