@@ -9,13 +9,13 @@ const makeFetch = async (url) => {
 const fetchRestaurants = async () =>
   await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants")
 
-const fetchDailyMenu = async (id) =>
+const fetchDailyMenuFi = async (id) =>
   makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
 
 const fetchDailyMenuEn = async (id) =>
   makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/${idKieli}`)
 
-const fetchWeeklyMenu = async (id) =>
+const fetchWeeklyMenuFi = async (id) =>
   makeFetch(`https://https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/${idKieli}`)
 
 const fetchWeeklyMenuEn = async (id) =>
@@ -208,18 +208,14 @@ const createDialog = (restaurant, dialogNode, menu) => {
   const phone = restaurant.phone !== "-" ? createPhoneLink(restaurant.phone) : ""
 
   dialogNode.innerHTML = `
-    <h1>${restaurant.name}</h1>
+    <h3>${restaurant.name}</h3>
     <p>${restaurant.address}, ${restaurant.postalCode} ${restaurant.city}</p>
     <p>${restaurant.company} ${phone}</p>
 
-    <ul>
-    ${menu.courses.map(({name, price, diets}) =>
-
-    `<li>${name} - ${price} (${diets.join(", ")})</li>`).join("")}
-    </ul>
-
     <form method="dialog">
+      <button class="button">${menuTeksti}</button>
       <button class = "button">Sulje</button>
+
     </form>
   `
   dialogNode.showModal()
@@ -228,48 +224,48 @@ const createDialog = (restaurant, dialogNode, menu) => {
 
 const handleTableRowClick = async (tr, restaurant, dialogNode) => {
   document.querySelectorAll("tr").forEach((tr) => {
-    tr.classList.remove("highlight")
-  })
+    tr.classList.remove("highlight");
+  });
 
-  tr.classList.add("highlight")
+  tr.classList.add("highlight");
 
+  let menu;
   if (getSelectedLanguage() === 'FI') {
-    const menu = await fetchDailyMenuFi(restaurant._id);
+    menu = await fetchDailyMenuFi(restaurant._id);
   } else {
-    const menu = await fetchDailyMenuEn(restaurant._id);
+    menu = await fetchDailyMenuEn(restaurant._id);
   }
 
-  console.log("menu", menu)
+  console.log("menu", menu);
 
-  createDialog(restaurant, dialogNode, menu)
-}
+  createDialog(restaurant, dialogNode, menu);
+};
+
+
 const createTable = async (restaurants) => {
   const tableNode = document.querySelector("table");
   const dialogNode = document.querySelector("dialog");
 
+  // Clear existing rows if any
+  tableNode.innerHTML = '';
+
   for (const restaurant of restaurants) {
-    if (getSelectedLanguage() === 'FI') {
-      const menu = await fetchDailyMenuFi(restaurant._id);
-    } else {
-      const menu = await fetchDailyMenuEn(restaurant._id);
-    }
-
     const tr = document.createElement("tr");
-
 
     tr.innerHTML = `
       <td>${restaurant.name}</td>
       <td>${restaurant.address}</td>
       <td>${restaurant.city}</td>
-      <td>${restaurant.distance.toFixed(2) +' km'}</td>
+      <td>${restaurant.distance.toFixed(2)} km</td>
     `;
     tableNode.appendChild(tr);
 
-    tr.addEventListener("click", () => {
-      handleTableRowClick(tr, restaurant, dialogNode);
+    tr.addEventListener("click", async () => {
+      await handleTableRowClick(tr, restaurant, dialogNode);
     });
   }
 };
+
 
 const buildWebsite = async () => {
   try {

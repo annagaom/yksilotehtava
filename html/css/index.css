@@ -29,7 +29,6 @@ tr {
 table {
   border-collapse: collapse;
   border-spacing: 0;
-
   padding-left: 5%;
 }
 
@@ -52,9 +51,11 @@ td {
 }
 
 dialog {
-  background-color: rgb(212, 214, 205);
+  background-color: rgb(216, 219, 207);
   box-shadow: 12px, 0px, 0px, 4px ;
   min-width: 25vw;
+  border-radius: 1rem;
+  border-color: rgb(111, 157, 125);
 }
 
 /* Varmista, että taulukon leveys pysyy pienempänä kuin sivun leveys */
