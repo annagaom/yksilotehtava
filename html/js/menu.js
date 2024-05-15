@@ -18,8 +18,6 @@ const makeFetch = async (url) => {
   }
 };
 
-const fetchRestaurants = async () => await makeFetch("https://10.120.32.94/restaurant/api/v1/restaurants");
-
 const fetchDailyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/fi`);
 
 const fetchDailyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/daily/${id}/en`);
@@ -28,48 +26,20 @@ const fetchWeeklyMenuFi = async (id) => makeFetch(`https://10.120.32.94/restaura
 
 const fetchWeeklyMenuEn = async (id) => makeFetch(`https://10.120.32.94/restaurant/api/v1/restaurants/weekly/${id}/en`);
 
-async function fetchAndLogData() {
-  try {
-    const selectedTypeFi = document.getElementById("menuTypeFi");
-    const selectedTypeEn = document.getElementById("menuTypeEn");
-
-    const dailyMenuFi = await fetchDailyMenuFi(restaurantId);
-    const dailyMenuEn = await fetchDailyMenuEn(restaurantId);
-    const weeklyMenuFi = await fetchWeeklyMenuFi(restaurantId);
-    const weeklyMenuEn = await fetchWeeklyMenuEn(restaurantId);
-
-    console.log('Daily menu (FI):', dailyMenuFi);
-    console.log('Daily menu (EN):', dailyMenuEn);
-    console.log('Weekly menu (FI):', weeklyMenuFi);
-    console.log('Weekly menu (EN):', weeklyMenuEn);
-
-    const selectedValue = getSelectedValue();
-    console.log('Selected value:', selectedValue);
-
-    if (selectedValue=== "dailyFi") {
-     displayDailyMenu(dailyMenuFi);
-    } else if (selectedValue === "weeklyFi") {
-     displayWeeklyMenu(weeklyMenuFi);
-    } else if (selectedValue === "dailyEn") {
-      displayDailyMenu(dailyMenuEn);
-    } else if (selectedValue  === "weeklyEn") {
-      displayWeeklyMenu(weeklyMenuEn);
-    }
-
-
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
 const displayDailyMenu = (menu) => {
   const menuList = document.getElementById('menuList');
   menuList.innerHTML = '';
 
   menu.courses.forEach(course => {
     const listItem = document.createElement('li');
-    listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price}<br>Diets: ${course.diets.join(', ')}`;
+    const diets = Array.isArray(course.diets) ? course.diets.join(', ') : 'No diet information';
+    listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price}<br>Diets: ${diets}`;
     menuList.appendChild(listItem);
+
+    // Lisää <hr> jokaisen ruokalajin jälkeen
+    const hr = document.createElement('hr');
+    hr.className = 'hr2';
+    menuList.appendChild(hr);
   });
 };
 
@@ -78,14 +48,20 @@ const displayWeeklyMenu = (menu) => {
   menuList.innerHTML = '';
 
   menu.days.forEach(day => {
-    const dayHeader = document.createElement('h3');
+    const dayHeader = document.createElement('h2');
     dayHeader.textContent = day.date;
     menuList.appendChild(dayHeader);
 
     day.courses.forEach(course => {
       const listItem = document.createElement('li');
-      listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price || 'Not specified'}<br>Diets: ${course.diets.join(', ')}`;
+      const diets = Array.isArray(course.diets) ? course.diets.join(', ') : 'No diet information';
+      listItem.innerHTML = `<strong>${course.name}</strong><br>Price: ${course.price || 'Not specified'}<br>Diets: ${diets}`;
       menuList.appendChild(listItem);
+
+      // Lisää <hr> jokaisen ruokalajin jälkeen
+      const hr = document.createElement('hr');
+      hr.className = 'hr2';
+      menuList.appendChild(hr);
     });
   });
 };
@@ -114,39 +90,56 @@ const getSelectedValue = () => {
   }
 };
 
-const createTable = (menu) => {
-
-
-
-  const table = document.getElementById('menuList');
-  menuList.innerHTML = '';
-
+const updateSelectedAlue = async () => {
   const selectedValue = getSelectedValue();
-  console.log('Selected value:', selectedValue);
+  console.log('Selected alue vaihdettu:', selectedValue);
+  await fetchAndLogData();
+  return selectedValue;
+};
 
-
-
-
-  };
-
-const buildWebsite = async () => {
+async function fetchAndLogData() {
   try {
-    const menu = await fetchAndLogData();
-    createTable(menu);
+    const selectedValue = getSelectedValue();
+    console.log('Fetching data for selected value:', selectedValue);
+
+    const dailyMenuFi = await fetchDailyMenuFi(restaurantId);
+    const dailyMenuEn = await fetchDailyMenuEn(restaurantId);
+    const weeklyMenuFi = await fetchWeeklyMenuFi(restaurantId);
+    const weeklyMenuEn = await fetchWeeklyMenuEn(restaurantId);
+
+    console.log('Daily menu (FI):', dailyMenuFi);
+    console.log('Daily menu (EN):', dailyMenuEn);
+    console.log('Weekly menu (FI):', weeklyMenuFi);
+    console.log('Weekly menu (EN):', weeklyMenuEn);
+
+    if (selectedValue === "dailyFi") {
+      displayDailyMenu(dailyMenuFi);
+    } else if (selectedValue === "weeklyFi") {
+      displayWeeklyMenu(weeklyMenuFi);
+    } else if (selectedValue === "dailyEn") {
+      displayDailyMenu(dailyMenuEn);
+    } else if (selectedValue === "weeklyEn") {
+      displayWeeklyMenu(weeklyMenuEn);
+    } else {
+      console.error('Unknown selected value:', selectedValue);
+    }
   } catch (error) {
-    console.error('Error fetching restaurants:', error);
+    console.error('Error fetching data:', error);
   }
-};
+}
 
+// Käynnistää tietojen hakuprosessin, kun dokumentti on ladattu
+document.addEventListener('DOMContentLoaded', async () => {
+  await fetchAndLogData();
 
+  const menuTypeFi = document.getElementById('menuTypeFi');
+  const menuTypeEn = document.getElementById('menuTypeEn');
 
-buildWebsite();
+  if (menuTypeFi) {
+    menuTypeFi.addEventListener('change', updateSelectedAlue);
+  }
 
-const options = {
-  enableHighAccuracy: true,
-  timeout: 5000,
-  maximumAge: 0
-};
-
-// // Käynnistää tietojen hakuprosessin, kun dokumentti on ladattu
-// document.addEventListener('DOMContentLoaded', fetchAndLogData);
+  if (menuTypeEn) {
+    menuTypeEn.addEventListener('change', updateSelectedAlue);
+  }
+});

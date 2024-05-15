@@ -29,6 +29,11 @@ input, nutton, select {
   padding: 0.25rem;
 }
 
+.menuSelection {
+  margin-bottom: 2rem;
+
+}
+
 #name {
   border: 1px solid #cfd1d3;
 }

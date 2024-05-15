@@ -62,6 +62,12 @@ hr {
   background-image: linear-gradient(to right, #50a1b1, #72a6a1, #ccc);
 }
 
+.hr2 {
+  border: 0;
+  height: 1px;
+  color: rgb(238, 241, 243);
+}
+
 button {
   background-color: #45a891;
   border: 1px solid #ccc;
