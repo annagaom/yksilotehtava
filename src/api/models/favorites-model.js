@@ -6,54 +6,65 @@ const listAllFavorites = async () => {
     return rows;
 };
 
-const findFavoriteByUserId = async (id) => {
-  const [rows] = await promisePool.execute(
-      'SELECT * FROM favorites WHERE favorite_id = ?',
-      [id]
-  );
-  if (rows.length === 0) {
+const findFavoriteByUserId = async (user_id) => {
+  try {
+
+    const [rows] = await promisePool.execute(
+      'SELECT * FROM favorites WHERE user_id = ?',
+      [user_id]
+    );
+    if (rows.length === 0) {
       return false;
+    }
+    return rows[0];
+  } catch (error) {
+    console.error('Error finding user photo by user id:', error);
+    return false;
   }
-  return rows;
 };
 
 const addFavorite = async (favorite) => {
   const {
-    restaurant_id,
+    user_id,
     company,
     name,
     address,
     city,
     puh,
     email,
-    distance
+    distance,
+    restaurant_id
     } = favorite;
 
   const sql = `INSERT INTO favorites (
-    restaurant_id,
+    user_id,
     company,
     name,
     address,
     city,
     puh,
     email,
-    distance) VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
+    distance,
+    restaurant_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
   const data = [
-    restaurant_id,
+    user_id,
     company,
     name,
     address,
     city,
     puh,
     email,
-    distance
+    distance,
+    restaurant_id
   ];
 
   try {
     const [rows] = await promisePool.execute(sql, data);
     if (rows && rows.affectedRows !== 0) {
+      console.log('Favorite added:', rows);
       rows[0];
+
     } else {
       return false;
     }
@@ -63,12 +74,12 @@ const addFavorite = async (favorite) => {
   }
 };
 
-const removeFavoriteByRestaurantId = async (id) => {
+const removeFavoriteByRestaurantAndUserId = async (restaurant_id, user_id) => {
   const connection = await promisePool.getConnection();
   try {
       const [rows] = await promisePool.execute(
-          'DELETE FROM favorites WHERE favorite_id = ?',
-          [id]
+          'DELETE FROM favorites WHERE restaurant_id = ? AND user_id = ?',
+          [restaurant_id, user_id]
       );
       if (rows.affectedRows === 0) {
           return false;
@@ -90,5 +101,5 @@ export {
   listAllFavorites,
   findFavoriteByUserId,
   addFavorite,
-  removeFavoriteByRestaurantId
+  removeFavoriteByRestaurantAndUserId
 };

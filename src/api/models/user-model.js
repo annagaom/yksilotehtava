@@ -8,7 +8,7 @@ const listAllUsers = async () => {
 
 const findUserById = async (id) => {
   const [rows] = await promisePool.execute(
-      'SELECT * FROM kayttaja WHERE user_id = ?',
+      'SELECT * FROM users WHERE user_id = ?',
       [id]
   );
   if (rows.length === 0) {

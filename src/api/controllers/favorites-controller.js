@@ -2,7 +2,7 @@ import {
   listAllFavorites,
   findFavoriteByUserId,
   addFavorite,
-  removeFavoriteByRestaurantId
+  removeFavoriteByRestaurantAndUserId
 } from '../models/favorites-model.js';
 
 const getFavorites = async (req, res) => {
@@ -15,7 +15,7 @@ const getFavorites = async (req, res) => {
 };
 
 const getFavoriteByUserId = async(req, res) => {
-const favorite = await findFavoriteByUserId(req.params.favorite_id);
+const favorite = await findFavoriteByUserId(req.params.user_id);
   if (favorite) {
       res.json(favorite);
   } else {
@@ -35,10 +35,10 @@ if (!result) {
 res.status(201).json(result);
 };
 
-const deleteFavoriteByRestaurantId = async (req, res) => {
+const deleteFavoriteByRestaurantAndUserId = async (req, res) => {
 
-  const result = await removeFavoriteByRestaurantId(req.params.user_id);
-  if (!favorite) {
+  const result = await removeFavoriteByRestaurantAndUserId(req.params.restaurant_id, req.params.user_id);
+  if(!result) {
       res.sendStatus(400);
       return;
   }
@@ -49,5 +49,5 @@ export {
 getFavorites,
 getFavoriteByUserId,
 postFavorite,
-deleteFavoriteByRestaurantId
+deleteFavoriteByRestaurantAndUserId
 };
