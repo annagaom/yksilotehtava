@@ -89,4 +89,9 @@ button {
   text-decoration: none;
 }
 
+.img {
+  width: 90%;
+  border-radius: 1rem;
+}
+
 
