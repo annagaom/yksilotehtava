@@ -316,11 +316,18 @@ const buildWebsite = async () => {
     console.error('Error fetching restaurants:', error);
   }
 };
+ if (selectLanguage === 'FI') {
+  document.getElementById("sortByFi").addEventListener("change", async () => {
+    const restaurants = await fetchRestaurants();
+    createTable(restaurants);
+  });
+} else {
+  document.getElementById("sortByEn").addEventListener("change", async () => {
+    const restaurants = await fetchRestaurants();
+    createTable(restaurants);
+  });
 
-document.getElementById("sortByFi").addEventListener("change", async () => {
-  const restaurants = await fetchRestaurants();
-  createTable(restaurants);
-});
+}
 
 buildWebsite();
 
