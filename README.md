@@ -3,10 +3,7 @@
 
 Tehtävät tallennettu myös omaan public_html kansioon:
 
-[Yksilötehtävä eClound](https://users.metropolia.fi/~annagao/wsk_tehtavat/yksilotehtava/html/index.html)
-
-[Public kansio](https://users.metropolia.fi/~annagao/wsk_tehtavat/yksilotehtava/html/)
-Tässä on korjattu versio tekstistä:
+[Public kansio](https://users.metropolia.fi/~annagao/yksilotehtava
 
 ---
 
