@@ -21,6 +21,8 @@ Tehdy:
 
 - Kirjautuminen jää jumiin: vaikka käyttäjätunnus ja salasana ovat oikein ja tulostettu konsoliin, seuraava rivi näyttää "false", salasana on väärä.
 
+- Kaksi kielestä, english ja suomi.
+
 
 ![Screenshot](image.png)
 
