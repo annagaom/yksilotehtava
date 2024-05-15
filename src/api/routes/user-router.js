@@ -46,7 +46,7 @@ userRouter.route('/:id')
   .put(putUser)
   .delete(deleteUserByUserId);
 userRouter.route('/password/:id').put(updatePassword);
-userRouter.route('/name/:tunnus').get(getUserByUsername);
+userRouter.route('/name/:username').get(getUserByUsername);
 
 userRouter.route('/photo/:id')
 .get(getUserPhotoByUserId)

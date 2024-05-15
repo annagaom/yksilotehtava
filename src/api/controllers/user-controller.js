@@ -77,17 +77,24 @@ const postUser = async (req, res) => {
 const postUserLogin = async (req, res) => {
   try {
       const { username, password } = req.body;
+      console.log('Username-controllersta: ', username);
+      console.log('Password- controllersta', password);
 
       if (!username || !password) {
           throw new Error("Käyttäjätunnus ja salasana ovat pakollisia.");
       }
 
       const user = await findUserByUsername(username);
+
+      console.log('Finf user by username - controller: ',  user);
       console.log('Finf user by username: ',  user);
 
       if (!user) {
           console.log(`No user found with username: ${username}`);
           return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
+      } else {
+          console.log('User found by username: ', user);
+
       }
       console.log(`Logging in user: ${username}`);
       console.log(`Stored password hash: ${user.password}`);
@@ -98,14 +105,15 @@ const postUserLogin = async (req, res) => {
 
       if (!passwordCorrect) {
           console.log(`Incorrect password for user: ${username}`);
-          return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
-      }
+          return res.status(401).json({ error: "Väärä ksalasana." });
+      } else{
 
       const token = jwt.sign(
           { user_id: user.user_id, username: user.username },
           SECRET_KEY,
           { expiresIn: "2h" }
       );
+    }
 
       res.status(200).json({ success: true, message: "Kirjautuminen onnistui.", token, user_id: user.user_id });
 
@@ -114,9 +122,6 @@ const postUserLogin = async (req, res) => {
       res.status(400).json({ error: error.message });
   }
 };
-
-
-
 
 
 const putUser = async (req, res) => {
