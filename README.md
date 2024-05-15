@@ -3,7 +3,7 @@
 
 Tehtävät tallennettu myös omaan public_html kansioon:
 
-[Public kansio](https://users.metropolia.fi/~annagao/yksilotehtava
+[Public kansio](https://users.metropolia.fi/~annagao/yksilotehtava)
 
 ---
 
