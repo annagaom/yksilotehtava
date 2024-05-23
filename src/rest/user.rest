@@ -21,8 +21,6 @@ Content-Type: application/json
   "password": "123"
 }
 
-### update password
-PUT http://localhost:3000/api/v1/users/password/2
 
 ### update user password
 PUT http://localhost:3000/api/v1/users/password/71

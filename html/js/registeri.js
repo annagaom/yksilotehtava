@@ -9,26 +9,20 @@ const registerButton = document.getElementById('registerButton');
 if (registerButton) {
   registerButton.addEventListener('click', function (event) {
     event.preventDefault();
+    const firstname = document.getElementById('firstname').value || '' ;
+    const lastname = document.getElementById('lastname').value || '' ;
+    const photo = document.getElementById('photo').value || '' ;
     const username = document.getElementById('username').value || '' ;
     const password = document.getElementById('password').value || '' ;
     const email = document.getElementById('email').value|| '' ;
-    const firstname = document.getElementById('firstname').value || '' ;
-    const lastname = document.getElementById('lastname').value || '' ;
-    const address = document.getElementById('address').value || '' ;
-    const postalcode = document.getElementById('postalcode').value || '' ;
-    const city = document.getElementById('city').value || '' ;
-    const phone = document.getElementById('phone').value || '' ;
 
     const data = {
-      username: username,
-      password: password,
-      email: email,
       firstname: firstname,
       lastname: lastname,
-      address: address,
-      postalcode: postalcode,
-      city: city,
-      phone: phone
+      photo: photo,
+      username: username,
+      password: password,
+      email: email
     };
 
    console.log(data);
@@ -57,12 +51,12 @@ if (registerButton) {
           switch (selectedLanguage) {
               case 'EN':
                   alert('Registration successful. Welcome!');
-                  targetPage = '../../html/en/login_en.html';
+                  targetPage = '../en/login_en.html';
                   break;
               case 'FI':
               default:
                   alert('Rekisteröinti onnistui. Pääset kirjautumaan sisään!');
-                  targetPage = '../../html/fi/login.html';
+                  targetPage = '../fi/login.html';
                   break;
             }
               window.location.href = targetPage;  // Uudelleenohjaus rekisteröinnin jälkeen

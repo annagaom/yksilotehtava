@@ -199,28 +199,52 @@ const updatePassword = async (req, res) => {
     }
 };
 
+
+
 const putUserPhotoByUserId = async (req, res) => {
-    try {
-        const file = req.file;
-        const user_id = req.params.id;
+  try {
+    const { username, password } = req.body;
+    console.log('Username-controllersta: ', username);
+    console.log('Password-controllersta: ', password);
 
-        if (!file) {
-            return res.status(400).send("Kuva on pakollinen.");
-        }
-
-        const result = await updateUserPhotoyserId(file, user_id);
-
-        if (!result) {
-            return res.status(400).send("Kuvan päivitys epäonnistui.");
-        }
-
-        return res.status(200).send("Kuva päivitetty onnistuneesti.");
-
-    } catch (error) {
-        console.error("Virhe kuvan päivityksessä:", error);
-        return res.status(500).send("Sisäinen palvelinvirhe.");
+    if (!username || !password) {
+      throw new Error("Käyttäjätunnus ja salasana ovat pakollisia.");
     }
+
+    const user = await findUserByUsername(username);
+    console.log('Find user by username - controller: ', user);
+
+    if (!user) {
+      console.log(`No user found with username: ${username}`);
+      return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
+    }
+
+    console.log(`Logging in user: ${username}`);
+    console.log(`Stored password hash: ${user.password}`);
+    console.log(`Input password: ${password}`);
+
+    const passwordCorrect = await bcrypt.compare(password, user.password);
+    console.log(`Password correct: ${passwordCorrect}`);
+
+    if (!passwordCorrect) {
+      console.log(`Incorrect password for user: ${username}`);
+      return res.status(401).json({ error: "Väärä salasana." });
+    }
+
+    const token = jwt.sign(
+      { user_id: user.user_id, username: user.username },
+      SECRET_KEY,
+      { expiresIn: "2h" }
+    );
+
+    res.status(200).json({ success: true, message: "Kirjautuminen onnistui.", token, user_id: user.user_id });
+
+  } catch (error) {
+    console.error("Virhe kirjautumisessa:", error.message);
+    res.status(400).json({ error: error.message });
+  }
 };
+
 
 const getUserPhotoByUserId = async (req, res) => {
     try {
