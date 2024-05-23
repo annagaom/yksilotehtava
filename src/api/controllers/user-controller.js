@@ -52,7 +52,7 @@ const postUser = async (req, res) => {
           firstname: req.body.firstname,
           lastname: req.body.lastname,
           username: req.body.username,
-          password: req.body.password,
+          password: bcrypt.hashSync(req.body.password, 10),
           email: req.body.email,
           photo: req.file ? req.file.filename : null
       };
@@ -77,25 +77,21 @@ const postUser = async (req, res) => {
 const postUserLogin = async (req, res) => {
   try {
       const { username, password } = req.body;
-      console.log('Username-controllersta: ', username);
-      console.log('Password- controllersta', password);
+      console.log('Username received: ', username);
+      console.log('Password received: ', password);
 
       if (!username || !password) {
           throw new Error("Käyttäjätunnus ja salasana ovat pakollisia.");
       }
 
       const user = await findUserByUsername(username);
-
-      console.log('Finf user by username - controller: ',  user);
-      console.log('Finf user by username: ',  user);
+      console.log('User found: ', user);
 
       if (!user) {
           console.log(`No user found with username: ${username}`);
           return res.status(401).json({ error: "Väärä käyttäjätunnus tai salasana." });
-      } else {
-          console.log('User found by username: ', user);
-
       }
+
       console.log(`Logging in user: ${username}`);
       console.log(`Stored password hash: ${user.password}`);
       console.log(`Input password: ${password}`);
@@ -106,17 +102,15 @@ const postUserLogin = async (req, res) => {
       if (!passwordCorrect) {
           console.log(`Incorrect password for user: ${username}`);
           return res.status(401).json({ error: "Väärä ksalasana." });
-      } else{
+      }
 
       const token = jwt.sign(
           { user_id: user.user_id, username: user.username },
           SECRET_KEY,
           { expiresIn: "2h" }
       );
-    }
 
       res.status(200).json({ success: true, message: "Kirjautuminen onnistui.", token, user_id: user.user_id });
-
   } catch (error) {
       console.error("Virhe kirjautumisessa:", error.message);
       res.status(400).json({ error: error.message });

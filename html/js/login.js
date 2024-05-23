@@ -20,7 +20,7 @@ switch (getSelectedLanguage()) {
 };
 
 function updateLoginButton(isLoggedIn) {
-  const loginButton = document.getElementById('loginButton');
+  const loginButton = document.getElementById('logInOutButton');
   if (isLoggedIn) {
       loginButton.textContent = logoutTeksti;
       loginButton.id = 'logoutButton';
@@ -37,7 +37,6 @@ function checkLoginStatus() {
   } else {
       updateLoginButton(false);
   }
-
   return token;
 }
 

@@ -9,7 +9,9 @@
   <link href="../css/main.css" rel="stylesheet" >
   <link href="../css/login.css" rel="stylesheet" >
   <script src="../js/default.js" defer></script>
-  <script src="../js/menu.js" defer></script>
+  <script src="../js/login.js" defer></script>
+  <script src="../js/registeri.js" defer></script>
+
 
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -40,7 +42,7 @@
 
         <li>
           <a href="login_en.html" class="nav_text">
-            <button class="home_btn">Log in</button>
+            <button class="home_btn" id="logInOutButton">Log in</button>
           </a>
         </li>
         <li class="kieli">
@@ -70,6 +72,7 @@
       <input
         type="text" name="login-passaword"
         id="login-password"
+        value="password"
         placeholder="Syötä salasana"
         required autofocus
 
