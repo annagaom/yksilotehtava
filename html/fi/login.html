@@ -5,7 +5,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ravintolat</title>
+  <title>Ravintolat/login</title>
   <link href="../css/main.css" rel="stylesheet" >
   <link href="../css/login.css" rel="stylesheet" >
   <script src="../js/default.js" defer></script>
@@ -71,7 +71,7 @@
       <input
         type="text" name="login-password"
         id="login-password"
-        value="password"
+
         placeholder="Syötä salasana"
         required autofocus
 
@@ -88,29 +88,30 @@
     <p>Jos sinulla ei ole vielä käyttäjää, voit rekisteröityä lomakella.</p>
 
   </div>
-  <div id="register-id">
-    <form class="form-container">
+
+  <div>
+    <form class="form-container" id="registeriForm">
 
       <label for="firstname">Etunimi </label>
-      <input type="text" name="firstname" id="firstname" placeholder="Etunimi" value="firstname"/>
+      <input type="text" name="firstname" id="firstname" placeholder="Etunimi"/>
 
       <label for="lastname">Sukunimi </label>
-      <input type="text" name="lastname" id="lastname" placeholder="Sukunimi" value="lastname"/>
+      <input type="text" name="lastname" id="lastname" placeholder="Sukunimi"/>
 
       <label for="photo">Profiilikuva:</label>
-      <input type="file" id="photo" name="photo" accept="image/*" value="photo">
+      <input type="file" id="photo" name="photo" accept="image/*">
 
       <label for="username">Käyttäjätunnus *</label>
-      <input type="text" name="username" id="username" value="username" placeholder="Käyttäjätunnus" required autofocus />
+      <input type="text" name="username" id="username" placeholder="Käyttäjätunnus" required autofocus />
 
       <label for="password">Salasana *</label>
-      <input class="myPasswordField" name="password" type="password" value="password" id="password" placeholder="salasana" required autofocus/>
+      <input class="myPasswordField" name="password" type="password" id="password" placeholder="salasana" required autofocus/>
 
       <label for="email">Sähköposti</label>
-      <input type="email" name="email" id="email" value="email" placeholder="email"/>
+      <input type="email" name="email" id="email" placeholder="email"/>
 
-      <button type="resetButton">Tyhjennä lomake</button>
-      <button type="registerButton" >Rekisteröidy</button>
+      <button type="submit">Tyhjennä lomake</button>
+      <button type="submit" >Rekisteröidy</button>
 
 
     </form>
