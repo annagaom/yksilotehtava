@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
               let targetPage = '';  // Määrittää sivun, jonne siirrytään rekisteröinnin jälkeen
               switch (selectedLanguage) {
                 case 'EN':
-                  alert('Registration successful. Welcome!');
+                  alert('Registration successful. You can log in!');
                   targetPage = '../en/login_en.html';
                   break;
                 case 'FI':
